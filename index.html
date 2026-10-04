@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-  /* Language chooser: English-first browsers go to en/, everyone else to fr/. Without JavaScript the links below do the job. */
+  /* Language chooser (hreflang x-default): English-first browsers go to en/, everyone else to fr/.
+     Anchors from the old single-page site are mapped to their new names. Without JavaScript the
+     two links on this page do the job. */
   (function () {
     var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
-    var target = /^en/i.test(String(langs[0] || '')) ? 'en/' : 'fr/';
-    location.replace(target + location.search + location.hash);
+    var en = /^en/i.test(String(langs[0] || ''));
+    var old = { '#work': en ? '#case-studies' : '#etudes-de-cas', '#how': en ? '#method' : '#methode', '#pricing': en ? '#pricing' : '#tarifs' };
+    var hash = old[location.hash] || location.hash;
+    location.replace((en ? 'en/' : 'fr/') + location.search + hash);
   })();
 </script>
-<noscript><meta http-equiv="refresh" content="0; url=fr/"></noscript>
 <title>mlkleadhunters — Cold email pour experts-comptables · Cold email for accountants</title>
 <meta name="description" content="Prospection par cold email clé en main pour cabinets d’expertise comptable. Des rendez-vous qualifiés avec les dirigeants de votre zone, dans le respect de votre déontologie.">
 <link rel="alternate" hreflang="fr" href="https://mlkleadhunters.fr/fr/">
@@ -46,7 +49,7 @@
   </defs>
 </svg>
 
-<main class="mk-glass mk-glass--hero mk-on-dark" aria-label="Choix de la langue · Choose your language">
+<main class="mk-glass mk-glass--hero mk-on-dark">
   <div class="mk-glass__scene"></div>
   <div class="mk-glass__refract"></div>
   <div class="mk-glass__ribs"></div>
@@ -59,6 +62,7 @@
           <span class="mk-sr">mlkleadhunters</span>
           <span class="mk-wordmark mk-wordmark--lg" aria-hidden="true"><svg class="mk-wordmark__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/></svg><span class="mk-wordmark__mlk">mlk</span><span class="mk-wordmark__name">leadhunters</span></span>
           <span class="mk-label">Experts-comptables</span>
+          <span class="mk-label" lang="en">Accountants</span>
         </h1>
         <div class="mk-hero__actions">
           <a class="mk-button" href="fr/" hreflang="fr" lang="fr">Français</a>

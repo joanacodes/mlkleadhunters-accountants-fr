@@ -217,12 +217,15 @@ h1, h2, h3, h4 { margin: 0; font-weight: 500; }
    so every Lead Hunters and studio page composes from one stylesheet.
    ===================================================================== */
 
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 [id] { scroll-margin-top: var(--space-6); }
 ::selection { background: var(--ink); color: var(--surface); }
-ul, ol { margin: 0; padding: 0; }
 .mk-on-dark ::selection { background: var(--ink-on-dark); color: var(--surface-dark); }
+ul, ol { margin: 0; padding: 0; }
+/* Headings never end on a lone word; running text avoids short last lines. */
+h1, h2, h3, summary, .mk-title, .mk-heading { text-wrap: balance; }
+p, li, blockquote { text-wrap: pretty; }
+/* Keeps a hyphenated compound (« rendez-vous », Île-de-France) whole at the end of a line. */
+.mk-nowrap { white-space: nowrap; }
 
 /* Accessibility helpers */
 .mk-sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
@@ -234,34 +237,54 @@ ul, ol { margin: 0; padding: 0; }
   font-size: 15px; font-weight: 500;
 }
 .mk-skip:focus { transform: none; }
+main:focus { outline: none; }
+
+/* Label refinements: long labels wrap on phones instead of widening the page,
+   and the decorative brackets stay out of the accessible name. */
+.mk-label { white-space: normal; }
+.mk-label::before { content: "[\00a0"; content: "[\00a0" / ""; }
+.mk-label::after { content: "\00a0]"; content: "\00a0]" / ""; }
+/* On the sage band, small muted text takes full ink (the system keeps ink-muted at 15px+ there). */
+.mk-section--band .mk-label, .mk-section--band .mk-card__step { color: var(--ink); }
 
 /* ---------- Brand: wordmark plus the audience label (accountants site) ---------- */
 .mk-brand { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px var(--space-3); }
 .mk-brand .mk-label { padding-top: 2px; }
 @media (max-width: 520px) { .mk-brand { flex-direction: column; align-items: flex-start; } }
 
-/* ---------- Nav additions: relative anchor for the menu panel ---------- */
-.mk-nav { position: relative; z-index: 5; }
-@media (max-width: 640px) { .mk-nav__cta { display: none; } }
+/* ---------- Site header: the nav, laid over the first glass panel ----------
+   It sits outside <main> (a banner landmark) and floats over the hero, so the hero's h1 is the
+   first thing inside <main>. The first glass panel reserves its height. */
+.mk-site-header { position: absolute; top: 0; left: 0; right: 0; z-index: 10; background: transparent; }
+:root { --mk-header-h: 88px; }
+main > .mk-glass:first-child > .mk-glass__content { padding-top: var(--mk-header-h); }
+/* Over glass, secondary text takes full ink-on-dark (the glass is never as dark as surface-dark);
+   the current page is marked by a hairline instead of by colour. */
+.mk-site-header { --ink-muted: var(--ink-on-dark); }
+.mk-site-header .mk-nav__links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.mk-nav__links a { white-space: nowrap; }
+/* The full nav needs about 1100px; the small button needs another 140. Below, the menu takes over. */
+@media (max-width: 1240px) { .mk-nav__cta { display: none; } }
+@media (max-width: 1100px) { .mk-nav > nav { display: none; } }
 
-/* ---------- Menu: the phone and tablet replacement for mk-nav__links ---------- */
+/* ---------- Menu: the replacement for mk-nav__links below 1100px ---------- */
 .mk-menu { display: none; }
-@media (max-width: 900px) { .mk-menu { display: block; } }
+@media (max-width: 1100px) { .mk-menu { display: block; } }
 .mk-menu > summary { list-style: none; }
 .mk-menu > summary::-webkit-details-marker { display: none; }
 .mk-menu__close { display: none; }
 .mk-menu[open] .mk-menu__open { display: none; }
 .mk-menu[open] .mk-menu__close { display: inline; }
 .mk-menu__panel {
-  position: absolute; left: var(--gutter); right: var(--gutter); top: calc(100% - var(--space-2));
+  position: absolute; right: var(--gutter); top: calc(100% - var(--space-2));
+  width: min(400px, calc(100% - 2 * var(--gutter)));
   background: var(--surface-raised); border: 1px solid var(--line);
   padding: var(--space-3) var(--space-5) var(--space-5);
 }
-@media (max-width: 640px) { .mk-menu__panel { left: var(--space-4); right: var(--space-4); } }
+@media (max-width: 640px) { .mk-menu__panel { left: var(--space-4); right: var(--space-4); width: auto; } }
 .mk-menu__panel ul { list-style: none; }
 .mk-menu__panel li + li { border-top: 1px solid var(--line); }
 .mk-menu__panel li > a { display: block; padding-block: var(--space-4); font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -.01em; }
-.mk-menu__panel .mk-button { margin-top: var(--space-4); width: 100%; }
 .mk-menu__lang { display: none; padding-top: var(--space-4); border-top: 1px solid var(--line); }
 @media (max-width: 520px) { .mk-nav__end > .mk-lang { display: none; } .mk-menu__lang { display: block; } }
 
@@ -279,38 +302,63 @@ ul, ol { margin: 0; padding: 0; }
 .mk-photo--appointment-booking { --glass-image: url(../img/appointment-booking.jpg); }
 .mk-photo--meeting { --glass-image: url(../img/meeting.jpg); }
 .mk-photo--agenda { --glass-image: url(../img/agenda.jpg); }
+/* Smaller photo for small screens; set --glass-image-sm next to --glass-image. */
+@media (max-width: 900px) { .mk-glass--photo .mk-glass__scene { background-image: var(--glass-image-sm, var(--glass-image)); } }
+
+/* ---------- Text on glass ----------
+   The glass is lighter than surface-dark, so secondary text on it takes full ink-on-dark. On a
+   photograph the accent label does too: the bright ribs leave no room for 12px ember text. */
+.mk-glass .mk-hero__inner .mk-lead { color: var(--ink-on-dark); }
+.mk-glass { --ink-muted: var(--ink-on-dark); }
+.mk-glass--photo .mk-hero__inner .mk-label--accent { color: var(--ink-on-dark); }
 
 /* ---------- Glass hero composition ---------- */
-.mk-glass--hero { min-height: min(100svh, 980px); display: flex; flex-direction: column; }
-/* The hero's tint also shades the nav line and the key-figures line, where the photo is brightest. */
+.mk-glass--hero { min-height: min(100svh, 960px); display: flex; flex-direction: column; }
+/* The photo hero's tint shades the text column, the nav line and the key-figures line. */
 .mk-glass--hero .mk-glass__tint {
   background:
-    linear-gradient(180deg, rgba(27,24,22,.62) 0%, rgba(27,24,22,0) 20%, rgba(27,24,22,0) 58%, rgba(27,24,22,.78) 100%),
-    linear-gradient(90deg, rgba(27,24,22,.78) 0%, rgba(27,24,22,.46) 48%, rgba(27,24,22,.28) 100%);
+    linear-gradient(180deg, rgba(27,24,22,.72) 0%, rgba(27,24,22,.2) 16%, rgba(27,24,22,0) 30%, rgba(27,24,22,0) 60%, rgba(27,24,22,.84) 100%),
+    linear-gradient(90deg, rgba(27,24,22,.86) 0%, rgba(27,24,22,.74) 42%, rgba(27,24,22,.5) 64%, rgba(27,24,22,.28) 100%);
 }
-.mk-glass--hero .mk-glass__daylight { opacity: .6; background: radial-gradient(40% 60% at 84% 42%, var(--light-cool) 0%, rgba(0,0,0,0) 70%); }
+.mk-glass--hero .mk-glass__daylight { opacity: .55; background: radial-gradient(34% 52% at 88% 46%, var(--light-cool) 0%, rgba(0,0,0,0) 70%); }
 .mk-glass--hero > .mk-glass__content { flex: 1; display: flex; flex-direction: column; }
-.mk-glass--hero .mk-hero { flex: 1; display: flex; flex-direction: column; padding-block: var(--space-10) var(--space-7); }
+.mk-glass--hero .mk-hero { flex: 1; display: flex; flex-direction: column; padding-block: var(--space-9) var(--space-7); }
+.mk-glass--hero .mk-hero--middle { justify-content: center; }
 .mk-hero__inner { max-width: none; }
+.mk-hero__inner > * { min-width: 0; }
 .mk-hero__inner h1 { max-width: 15ch; }
 .mk-hero__inner h1.mk-display { max-width: 18ch; }
+@media (min-width: 641px) { .mk-hero__inner h1 .mk-em { white-space: nowrap; } }
 .mk-hero--page { padding-block: var(--space-10) var(--space-9); }
 @media (max-width: 900px) {
   .mk-glass--hero .mk-hero { padding-block: var(--space-9) var(--space-6); }
   .mk-hero--page { padding-block: var(--space-9) var(--space-8); }
+  .mk-glass__tint, .mk-glass--hero .mk-glass__tint { background: linear-gradient(180deg, rgba(27,24,22,.82) 0%, rgba(27,24,22,.76) 50%, rgba(27,24,22,.88) 100%); }
+  .mk-glass--hero .mk-glass__daylight { opacity: .3; background: radial-gradient(60% 30% at 95% 96%, var(--light-cool) 0%, rgba(0,0,0,0) 70%); }
 }
 @media (max-width: 640px) {
   .mk-glass--hero .mk-hero { padding-block: var(--space-8) var(--space-6); }
   .mk-hero--page { padding-block: var(--space-8) var(--space-7); }
-  .mk-glass__tint, .mk-glass--hero .mk-glass__tint { background: linear-gradient(180deg, rgba(27,24,22,.74) 0%, rgba(27,24,22,.7) 50%, rgba(27,24,22,.84) 100%); }
   .mk-glass--photo .mk-glass__scene { background-position: 22% center; }
   .mk-hero__actions .mk-button { width: 100%; }
 }
-/* Smaller photo for small screens; set --glass-image-sm next to --glass-image. */
-@media (max-width: 900px) { .mk-glass--photo .mk-glass__scene { background-image: var(--glass-image-sm, var(--glass-image)); } }
+
+/* Painted glass (inner pages, chooser, 404): a shade keeps the nav and the text legible where the
+   warm glow is brightest, and the cold daylight sits below the nav line. */
+.mk-glass:not(.mk-glass--photo):not(.mk-glass--image)::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-dark) 62%, transparent) 0%, transparent 26%),
+    linear-gradient(90deg, color-mix(in srgb, var(--surface-dark) 60%, transparent) 0%, color-mix(in srgb, var(--surface-dark) 42%, transparent) 45%, transparent 75%);
+}
+.mk-glass:not(.mk-glass--photo):not(.mk-glass--image) .mk-glass__daylight { background: radial-gradient(36% 58% at 88% 62%, var(--light-cool) 0%, transparent 70%); }
+@media (max-width: 640px) {
+  .mk-glass:not(.mk-glass--photo):not(.mk-glass--image)::before { background: linear-gradient(180deg, color-mix(in srgb, var(--surface-dark) 66%, transparent) 0%, color-mix(in srgb, var(--surface-dark) 48%, transparent) 22%, color-mix(in srgb, var(--surface-dark) 48%, transparent) 100%); }
+  .mk-glass:not(.mk-glass--photo):not(.mk-glass--image) .mk-glass__daylight { opacity: .45; background: radial-gradient(60% 34% at 92% 70%, var(--light-cool) 0%, transparent 70%); }
+}
 
 /* Key figures: three small figures on the hero's base line. Not Stats: no display size. */
-.mk-keyfigs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: var(--space-5) var(--space-6); margin-top: var(--space-9); padding-top: var(--space-5); border-top: 1px solid var(--line); }
+.mk-keyfigs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: var(--space-5) var(--space-6); margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--line); }
 .mk-keyfigs__caption { font-size: 15px; line-height: 1.4; font-weight: 400; letter-spacing: 0; color: var(--ink-muted); max-width: 20ch; }
 .mk-keyfigs__list { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .mk-keyfigs__item { display: grid; gap: var(--space-2); align-content: start; padding-right: var(--space-5); }
@@ -319,23 +367,31 @@ ul, ol { margin: 0; padding: 0; }
 .mk-keyfigs__note { font-size: 15px; line-height: 1.4; color: var(--ink-muted); }
 @media (max-width: 900px) { .mk-keyfigs { grid-template-columns: 1fr; } }
 @media (max-width: 640px) {
-  .mk-keyfigs { margin-top: var(--space-8); }
   .mk-keyfigs__list { grid-template-columns: 1fr; }
   .mk-keyfigs__item { grid-template-columns: 4.2em 1fr; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; }
   .mk-keyfigs__item + .mk-keyfigs__item { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
 }
 
-/* CTA band: the inner column is sized by its own text, not by the body's ch. */
+/* ---------- CTA band ---------- */
+/* The inner column is sized by its own text, not by the body's ch. */
 .mk-cta__inner { max-width: 820px; }
 .mk-cta__inner h2 { max-width: 16ch; }
 .mk-cta__inner .mk-lead { color: var(--ink-on-dark); }
-.mk-cta .mk-glass__tint { background: radial-gradient(70% 80% at 50% 50%, rgba(27,24,22,.72) 0%, rgba(27,24,22,.5) 100%); }
+.mk-cta .mk-glass__tint { background: radial-gradient(70% 80% at 50% 50%, rgba(27,24,22,.74) 0%, rgba(27,24,22,.56) 100%); }
+/* The cold light sits in the lower corner, away from the headline. */
+.mk-cta .mk-glass__daylight { opacity: .6; background: radial-gradient(34% 48% at 92% 88%, var(--light-cool) 0%, rgba(0,0,0,0) 70%); }
+@media (max-width: 640px) {
+  .mk-cta .mk-glass__tint { background: rgba(27,24,22,.74); }
+  .mk-cta .mk-glass__daylight { opacity: .35; }
+}
 
+/* ---------- Sections ---------- */
 /* Consecutive sections on the same ground share one gap instead of two. */
 .mk-section:not(.mk-section--band) + .mk-section:not(.mk-section--band) { padding-top: 0; }
 
-/* ---------- Section head: label, title, lead; optional link on the right ---------- */
+/* Section head: label, title, lead; optional link on the right */
 .mk-head { display: grid; gap: var(--space-4); margin-bottom: var(--space-8); }
+.mk-head--label { margin-bottom: var(--space-5); }
 .mk-head .mk-title { max-width: 22ch; }
 .mk-head .mk-lead { margin-top: var(--space-2); }
 .mk-head--split { grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: var(--space-6); }
@@ -343,34 +399,36 @@ ul, ol { margin: 0; padding: 0; }
 .mk-head__aside { grid-column: 2; grid-row: 1 / span 3; align-self: end; }
 @media (max-width: 760px) {
   .mk-head { margin-bottom: var(--space-7); }
+  .mk-head--label { margin-bottom: var(--space-5); }
   .mk-head--split { grid-template-columns: 1fr; }
   .mk-head__aside { grid-column: 1; grid-row: auto; justify-self: start; margin-top: var(--space-2); }
 }
 
-/* ---------- Split: text beside a photograph ---------- */
+/* Split: text beside a photograph */
 .mk-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-9); align-items: center; }
 .mk-split--top { align-items: start; }
 .mk-split--rev > :first-child { order: 2; }
-.mk-split__text { display: grid; gap: var(--space-5); justify-items: start; }
+.mk-split__text { display: grid; gap: var(--space-5); justify-items: start; min-width: 0; }
 .mk-split__text > .mk-title { max-width: 18ch; }
+.mk-split__text > .mk-stats, .mk-split__text > .mk-rows, .mk-split__text > .mk-ticks { width: 100%; }
 @media (max-width: 900px) {
   .mk-split { grid-template-columns: 1fr; gap: var(--space-7); }
   .mk-split--rev > :first-child { order: 0; }
 }
 
-/* ---------- Figure: plain photograph, square corners, label caption below ---------- */
+/* Figure: plain photograph, square corners, label caption below */
 .mk-figure { margin: 0; }
 .mk-figure img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: var(--surface-sage); }
 .mk-figure figcaption { margin-top: var(--space-3); }
 
-/* ---------- Statement: one sentence that states the offer ---------- */
+/* Statement: one sentence that states the offer */
 .mk-statement { display: grid; gap: var(--space-6); }
 .mk-statement > .mk-title { max-width: 26ch; }
 .mk-statement__body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6) var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--line); }
 .mk-statement__body p { color: var(--ink-muted); }
 @media (max-width: 760px) { .mk-statement__body { grid-template-columns: 1fr; } }
 
-/* ---------- Stats: up to two side by side, or stacked on hairlines ---------- */
+/* Stats: up to two side by side, or stacked on hairlines */
 .mk-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
 .mk-stats--stack { grid-template-columns: 1fr; gap: 0; }
 .mk-stats--stack .mk-stat { padding-block: var(--space-5); border-top: 1px solid var(--line); }
@@ -378,7 +436,7 @@ ul, ol { margin: 0; padding: 0; }
 .mk-stat__value--compact { font-size: clamp(56px, 6.4vw, 80px); }
 @media (max-width: 640px) { .mk-stats { grid-template-columns: 1fr; } }
 
-/* ---------- Rows: hairline list, title on the left, text on the right ---------- */
+/* Rows: hairline list, title on the left, text on the right */
 .mk-rows { list-style: none; border-bottom: 1px solid var(--line); }
 .mk-row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-3) var(--space-8); padding-block: var(--space-5); border-top: 1px solid var(--line); }
 .mk-row__title { font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -.01em; }
@@ -388,26 +446,27 @@ ul, ol { margin: 0; padding: 0; }
 
 /* Ticks: a plain hairline list for short items, no bullets, no icons */
 .mk-ticks { list-style: none; border-top: 1px solid var(--line); width: 100%; }
-.mk-ticks li { padding-block: var(--space-3); border-bottom: 1px solid var(--line); max-width: var(--measure); }
+.mk-ticks li { padding-block: var(--space-3); border-bottom: 1px solid var(--line); }
 .mk-ticks--muted li { color: var(--ink-muted); }
 
-/* ---------- Names: client firms typeset in a hairline row ---------- */
+/* Names: client firms typeset in a hairline row */
 .mk-names { list-style: none; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.mk-names li { background: var(--surface); padding: var(--space-5) var(--space-4); text-align: center; font-size: 20px; line-height: 1.2; font-weight: 500; letter-spacing: -.015em; color: var(--ink-muted); }
-@media (max-width: 900px) { .mk-names { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.mk-names li { background: var(--surface); padding: var(--space-5) var(--space-4); font-size: 20px; line-height: 1.2; font-weight: 500; letter-spacing: -.015em; color: var(--ink-muted); }
+@media (max-width: 1100px) { .mk-names { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .mk-names { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* ---------- Pledge: the guarantee, one line, hairlines above and below ---------- */
+/* Pledge: the guarantee, one line, hairlines above and below */
 .mk-pledge { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-5) var(--space-8); align-items: end; padding-block: var(--space-7); border-block: 1px solid var(--line); }
 .mk-pledge__text { display: grid; gap: var(--space-4); }
 .mk-pledge__text .mk-title { max-width: 24ch; }
 @media (max-width: 900px) { .mk-pledge { grid-template-columns: 1fr; align-items: start; } }
 
-/* ---------- Grids: four across, then two, then one ---------- */
+/* Grids: four across, then two, then one */
 .mk-grid--4 { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 1100px) { .mk-grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1100px) { .mk-grid--4 { grid-template-columns: repeat(2, 1fr); } .mk-grid--4 .mk-card { min-height: 0; } }
 @media (max-width: 640px) { .mk-grid--4 { grid-template-columns: 1fr; } }
 .mk-card--short { min-height: 220px; }
+@media (max-width: 900px) { .mk-card--short { min-height: 0; } }
 .mk-card .mk-heading { max-width: 20ch; }
 .mk-section--band .mk-card, .mk-section--band .mk-names li { background: var(--surface-raised); }
 .mk-card__step { font-size: 15px; font-weight: 500; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
@@ -424,7 +483,7 @@ ul, ol { margin: 0; padding: 0; }
 .mk-plan .mk-button { margin-top: auto; width: 100%; }
 .mk-plan--featured { background: var(--surface-raised); }
 
-/* ---------- FAQ: details on hairlines, arrow pill turns when open ---------- */
+/* ---------- FAQ: details on hairlines, the arrow pill turns when open (no motion) ---------- */
 .mk-faq { border-bottom: 1px solid var(--line); }
 .mk-faq__item { border-top: 1px solid var(--line); }
 .mk-faq__item > summary {
@@ -434,10 +493,10 @@ ul, ol { margin: 0; padding: 0; }
   font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -.01em;
 }
 .mk-faq__item > summary::-webkit-details-marker { display: none; }
+.mk-faq__q { min-width: 0; }
 .mk-faq__icon {
   flex: none; display: inline-grid; place-items: center; width: 40px; height: 40px;
   border: 1px solid var(--line); border-radius: var(--radius-pill);
-  transition: transform .2s ease;
 }
 .mk-faq__icon svg { width: 16px; height: 16px; transform: rotate(90deg); }
 .mk-faq__item[open] .mk-faq__icon { transform: rotate(180deg); }
@@ -451,13 +510,16 @@ ul, ol { margin: 0; padding: 0; }
 .mk-field { display: grid; gap: var(--space-2); }
 .mk-field--full { grid-column: 1 / -1; }
 .mk-field label { font-size: 15px; font-weight: 500; color: var(--ink-muted); }
+.mk-field__hint { font-weight: 400; }
+/* Fields are marked by an underline strong enough to find (3:1), not a box. */
 .mk-field input, .mk-field textarea {
   width: 100%; font: inherit; font-size: 17px; color: var(--ink);
-  background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  background: transparent; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 58%, transparent); border-radius: 0;
   padding: var(--space-2) 0 var(--space-3);
 }
+.mk-field input::placeholder, .mk-field textarea::placeholder { color: var(--ink-muted); opacity: .8; }
 .mk-field textarea { min-height: 128px; resize: vertical; line-height: 1.5; }
-.mk-field input:hover, .mk-field textarea:hover { border-bottom-color: var(--ink-muted); }
+.mk-field input:hover, .mk-field textarea:hover { border-bottom-color: var(--ink); }
 .mk-field input:focus, .mk-field textarea:focus { outline: none; border-bottom-color: var(--ink); box-shadow: 0 1px 0 0 var(--ink); }
 .mk-field input:focus-visible, .mk-field textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-sm); }
 .mk-form__foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-5); margin-top: var(--space-3); }
@@ -469,17 +531,15 @@ ul, ol { margin: 0; padding: 0; }
 .mk-team { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .mk-team li { background: var(--surface); padding: var(--space-5); display: grid; gap: var(--space-3); align-content: start; min-height: 160px; }
 .mk-team__role { font-size: 22px; line-height: 1.25; font-weight: 500; letter-spacing: -.01em; }
-@media (max-width: 1100px) { .mk-team { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 640px) { .mk-team { grid-template-columns: 1fr; } .mk-team li { min-height: 0; } }
-
-.mk-quote blockquote { margin: 0; }
-figure.mk-quote { max-width: none; }
-figure.mk-quote p { max-width: 24ch; }
-.mk-split__text > .mk-stats, .mk-split__text > .mk-rows, .mk-split__text > .mk-ticks { width: 100%; }
+@media (max-width: 1100px) { .mk-team { grid-template-columns: repeat(3, minmax(0, 1fr)); } .mk-team li:nth-child(5) { grid-column: span 2; } }
+@media (max-width: 640px) { .mk-team { grid-template-columns: 1fr; } .mk-team li { min-height: 0; } .mk-team li:nth-child(5) { grid-column: auto; } }
 
 /* ---------- Proof band: quote beside stacked stats ---------- */
+.mk-quote blockquote { margin: 0; }
+figure.mk-quote { max-width: none; }
+figure.mk-quote p { max-width: 34ch; }
 .mk-proof { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-9); align-items: start; }
-.mk-proof__lead { display: grid; gap: var(--space-7); }
+.mk-proof__lead { display: grid; gap: var(--space-7); min-width: 0; }
 @media (max-width: 900px) { .mk-proof { grid-template-columns: 1fr; gap: var(--space-8); } }
 
 /* ---------- Feature: a method chapter (label, title, lead, text, ticks, photo) ---------- */
@@ -498,6 +558,7 @@ figure.mk-quote p { max-width: 24ch; }
 .mk-prose > section + section { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--line); }
 .mk-prose h2 { font-size: clamp(24px, 2.4vw, 30px); line-height: 1.15; letter-spacing: -.015em; margin-bottom: var(--space-4); }
 .mk-prose h3 { font-size: 22px; line-height: 1.3; letter-spacing: -.01em; margin: var(--space-5) 0 var(--space-3); }
+@media (max-width: 640px) { .mk-prose h3 { font-size: 18px; } }
 .mk-prose p + p, .mk-prose p + ul, .mk-prose ul + p { margin-top: var(--space-4); }
 .mk-prose ul { padding-left: 1.2em; }
 .mk-prose li + li { margin-top: var(--space-2); }
@@ -505,44 +566,21 @@ figure.mk-quote p { max-width: 24ch; }
 .mk-prose a:hover { border-color: var(--ink); }
 
 /* ---------- Footer additions ---------- */
+@media (max-width: 1000px) { .mk-footer__grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .mk-footer__grid { grid-template-columns: 1fr; } }
-.mk-footer__col a { overflow-wrap: anywhere; }
+.mk-footer__col a { overflow-wrap: break-word; }
 .mk-footer__desc { margin-top: var(--space-4); max-width: 30ch; font-size: 15px; line-height: 1.5; color: var(--ink-muted); }
 .mk-footer__col > .mk-label { display: block; }
 .mk-footer__legal { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); }
 .mk-footer__legal a:hover { color: var(--ink); }
 
+/* ---------- Wordmark ---------- */
+/* The studio-size wordmark scales down on phones. */
+@media (max-width: 640px) { .mk-wordmark--xl { font-size: 36px; } }
+
 /* ---------- Utilities kept to a minimum ---------- */
 .mk-mt-5 { margin-top: var(--space-5); }
 .mk-mt-7 { margin-top: var(--space-7); }
+.mk-mt-9 { margin-top: var(--space-9); }
+@media (max-width: 640px) { .mk-mt-9 { margin-top: var(--space-8); } }
 .mk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); }
-
-/* ---------- Method page additions ---------- */
-/* Painted glass (the inner-page hero: no photo, no tint layer). The cold daylight moves below the
-   nav line, a shade keeps the nav and the lead legible where the warm glow is brightest, and the
-   lead takes full ink-on-dark. Applies to every painted hero, so inner pages need no extra markup. */
-.mk-glass:not(.mk-glass--photo):not(.mk-glass--image)::before {
-  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-dark) 62%, transparent) 0%, transparent 26%),
-    linear-gradient(90deg, color-mix(in srgb, var(--surface-dark) 42%, transparent) 0%, color-mix(in srgb, var(--surface-dark) 30%, transparent) 45%, transparent 75%);
-}
-.mk-glass:not(.mk-glass--photo):not(.mk-glass--image) .mk-glass__daylight { background: radial-gradient(36% 58% at 88% 62%, var(--light-cool) 0%, transparent 70%); }
-.mk-glass:not(.mk-glass--photo):not(.mk-glass--image) .mk-hero__inner .mk-lead { color: var(--ink-on-dark); }
-@media (max-width: 640px) {
-  .mk-glass:not(.mk-glass--photo):not(.mk-glass--image)::before { background: linear-gradient(180deg, color-mix(in srgb, var(--surface-dark) 62%, transparent) 0%, color-mix(in srgb, var(--surface-dark) 34%, transparent) 22%, color-mix(in srgb, var(--surface-dark) 34%, transparent) 100%); }
-  .mk-glass:not(.mk-glass--photo):not(.mk-glass--image) .mk-glass__daylight { opacity: .45; background: radial-gradient(60% 34% at 92% 70%, var(--light-cool) 0%, transparent 70%); }
-}
-/* Keeps a hyphenated word (« rendez-vous ») whole at the end of a title line. */
-.mk-nowrap { white-space: nowrap; }
-
-/* ---------- Site-wide refinements ---------- */
-/* Short cards drop their minimum height once they stack or pair up. */
-@media (max-width: 1100px) { .mk-grid--4 .mk-card { min-height: 0; } }
-@media (max-width: 900px) { .mk-card--short { min-height: 0; } }
-/* Balanced lines in the centred CTA band. */
-.mk-cta__inner h2, .mk-cta__inner .mk-lead { text-wrap: balance; }
-/* The studio-size wordmark scales down on phones (404 and chooser). */
-@media (max-width: 640px) { .mk-wordmark--xl { font-size: 36px; } }
-/* Full-height glass pages with a single message (chooser, 404) centre it vertically. */
-.mk-glass--hero .mk-hero--middle { justify-content: center; }
