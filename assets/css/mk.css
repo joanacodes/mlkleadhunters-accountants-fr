@@ -237,11 +237,12 @@ p, li, blockquote { text-wrap: pretty; }
   font-size: 15px; font-weight: 500;
 }
 .mk-skip:focus { transform: none; }
+.mk-skip:focus-visible { outline-color: var(--focus-on-dark); }
 main:focus { outline: none; }
 
 /* Label refinements: long labels wrap on phones instead of widening the page,
    and the decorative brackets stay out of the accessible name. */
-.mk-label { white-space: normal; }
+.mk-label { white-space: normal; line-height: 1.5; margin-block: -.25em; }
 .mk-label::before { content: "[\00a0"; content: "[\00a0" / ""; }
 .mk-label::after { content: "\00a0]"; content: "\00a0]" / ""; }
 /* On the sage band, small muted text takes full ink (the system keeps ink-muted at 15px+ there). */
@@ -249,19 +250,20 @@ main:focus { outline: none; }
 
 /* ---------- Brand: wordmark plus the audience label (accountants site) ---------- */
 .mk-brand { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px var(--space-3); }
-.mk-brand .mk-label { padding-top: 2px; }
+.mk-brand .mk-label { padding-top: 2px; white-space: nowrap; }
 @media (max-width: 520px) { .mk-brand { flex-direction: column; align-items: flex-start; } }
 
 /* ---------- Site header: the nav, laid over the first glass panel ----------
    It sits outside <main> (a banner landmark) and floats over the hero, so the hero's h1 is the
    first thing inside <main>. The first glass panel reserves its height. */
 .mk-site-header { position: absolute; top: 0; left: 0; right: 0; z-index: 10; background: transparent; }
+@media (max-width: 360px) { .mk-site-header { gap: var(--space-3); } }
 :root { --mk-header-h: 88px; }
 main > .mk-glass:first-child > .mk-glass__content { padding-top: var(--mk-header-h); }
 /* Over glass, secondary text takes full ink-on-dark (the glass is never as dark as surface-dark);
    the current page is marked by a hairline instead of by colour. */
 .mk-site-header { --ink-muted: var(--ink-on-dark); }
-.mk-site-header .mk-nav__links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.mk-site-header .mk-nav__links a[aria-current="page"], .mk-menu__panel a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
 .mk-nav__links a { white-space: nowrap; }
 /* The full nav needs about 1100px; the small button needs another 140. Below, the menu takes over. */
 @media (max-width: 1240px) { .mk-nav__cta { display: none; } }
@@ -327,6 +329,7 @@ main > .mk-glass:first-child > .mk-glass__content { padding-top: var(--mk-header
 .mk-hero__inner { max-width: none; }
 .mk-hero__inner > * { min-width: 0; }
 .mk-hero__inner h1 { max-width: 15ch; }
+.mk-hero__inner h1.mk-display-xl { max-width: 16ch; }
 .mk-hero__inner h1.mk-display { max-width: 18ch; }
 @media (min-width: 641px) { .mk-hero__inner h1 .mk-em { white-space: nowrap; } }
 .mk-hero--page { padding-block: var(--space-10) var(--space-9); }
@@ -467,7 +470,7 @@ main > .mk-glass:first-child > .mk-glass__content { padding-top: var(--mk-header
 @media (max-width: 640px) { .mk-grid--4 { grid-template-columns: 1fr; } }
 .mk-card--short { min-height: 220px; }
 @media (max-width: 900px) { .mk-card--short { min-height: 0; } }
-.mk-card .mk-heading { max-width: 20ch; }
+.mk-card .mk-heading { max-width: 21ch; }
 .mk-section--band .mk-card, .mk-section--band .mk-names li { background: var(--surface-raised); }
 .mk-card__step { font-size: 15px; font-weight: 500; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 
@@ -507,7 +510,7 @@ main > .mk-glass:first-child > .mk-glass__content { padding-top: var(--mk-header
 .mk-panel { background: var(--surface-raised); border: 1px solid var(--line); padding: var(--space-7); }
 @media (max-width: 640px) { .mk-panel { padding: var(--space-5); } }
 .mk-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5) var(--space-6); }
-.mk-field { display: grid; gap: var(--space-2); }
+.mk-field { display: grid; grid-template-rows: 1fr auto; gap: var(--space-2); }
 .mk-field--full { grid-column: 1 / -1; }
 .mk-field label { font-size: 15px; font-weight: 500; color: var(--ink-muted); }
 .mk-field__hint { font-weight: 400; }
@@ -517,7 +520,7 @@ main > .mk-glass:first-child > .mk-glass__content { padding-top: var(--mk-header
   background: transparent; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 58%, transparent); border-radius: 0;
   padding: var(--space-2) 0 var(--space-3);
 }
-.mk-field input::placeholder, .mk-field textarea::placeholder { color: var(--ink-muted); opacity: .8; }
+.mk-field input::placeholder, .mk-field textarea::placeholder { color: var(--ink-muted); opacity: 1; }
 .mk-field textarea { min-height: 128px; resize: vertical; line-height: 1.5; }
 .mk-field input:hover, .mk-field textarea:hover { border-bottom-color: var(--ink); }
 .mk-field input:focus, .mk-field textarea:focus { outline: none; border-bottom-color: var(--ink); box-shadow: 0 1px 0 0 var(--ink); }

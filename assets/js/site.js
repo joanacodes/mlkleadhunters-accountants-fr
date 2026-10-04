@@ -2,10 +2,25 @@
 (function () {
   'use strict';
 
-  // Menu: close the panel after following an in-page link, or on Escape.
+  // Skip link: <main> takes focus only for the jump, so a later click inside it
+  // does not reset the Tab order to the top of the page.
+  var main = document.querySelector('main[id]');
+  var skip = document.querySelector('.mk-skip');
+  if (main && skip) {
+    skip.addEventListener('click', function () {
+      main.setAttribute('tabindex', '-1');
+      main.addEventListener('blur', function () { main.removeAttribute('tabindex'); }, { once: true });
+      main.focus();
+    });
+  }
+
+  // Menu: close the panel after following an in-page link, on Escape, or when focus leaves it.
   document.querySelectorAll('.mk-menu').forEach(function (menu) {
     menu.addEventListener('click', function (e) {
       if (e.target.closest('a')) menu.removeAttribute('open');
+    });
+    menu.addEventListener('focusout', function (e) {
+      if (e.relatedTarget && !menu.contains(e.relatedTarget)) menu.removeAttribute('open');
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menu.hasAttribute('open')) {
