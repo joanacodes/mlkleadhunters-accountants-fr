@@ -1,0 +1,518 @@
+/* Verre cannelé — base stylesheet shared by mlkwebstudio, mlkleadhunters and the accountants site.
+   Tokens come from tokens.css (generated from tokens.json). Component classes are prefixed mk-. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  font-feature-settings: "ss01" 0, "kern" 1;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img, svg, video { display: block; max-width: 100%; }
+p { margin: 0; max-width: var(--measure); }
+h1, h2, h3, h4 { margin: 0; font-weight: 500; }
+
+/* French and English quotes come from the lang attribute, never typed. */
+:lang(fr) q { quotes: "«\202F" "\202F»"; }
+:lang(en) q { quotes: "\201C" "\201D"; }
+
+/* Focus: solid ring, visible on every ground. */
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-sm); }
+.mk-on-dark :focus-visible { outline-color: var(--focus-on-dark); }
+
+/* ---------- Dark context: remap the light tokens once, every component follows. ---------- */
+.mk-on-dark {
+  --surface: var(--surface-dark);
+  --surface-raised: var(--surface-dark-raised);
+  --ink: var(--ink-on-dark);
+  --ink-muted: var(--ink-on-dark-muted);
+  --line: var(--line-on-dark);
+  --accent-ink: var(--accent-on-dark);
+  --focus: var(--focus-on-dark);
+  background: var(--surface-dark);
+  color: var(--ink-on-dark);
+}
+
+/* ---------- Layout ---------- */
+.mk-container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.mk-section { padding-block: var(--space-10); }
+.mk-section--band { background: var(--surface-sage); }
+@media (max-width: 900px) { .mk-section { padding-block: var(--space-9); } }
+@media (max-width: 640px) { .mk-section { padding-block: var(--space-8); } .mk-container { padding-inline: var(--space-4); } }
+
+/* ---------- Type helpers ---------- */
+.mk-display-xl { font-size: clamp(44px, 7.4vw, 88px); line-height: .96; letter-spacing: -.03em; font-weight: 500; }
+.mk-display    { font-size: clamp(36px, 5.4vw, 64px); line-height: 1; letter-spacing: -.025em; font-weight: 500; }
+.mk-title      { font-size: clamp(30px, 3.6vw, 44px); line-height: 1.05; letter-spacing: -.02em; font-weight: 500; }
+.mk-heading    { font-size: clamp(24px, 2.4vw, 30px); line-height: 1.15; letter-spacing: -.015em; font-weight: 500; }
+.mk-lead       { font-size: clamp(18px, 1.6vw, 20px); line-height: 1.5; color: var(--ink-muted); max-width: 56ch; }
+.mk-small      { font-size: 15px; line-height: 1.5; }
+.mk-muted      { color: var(--ink-muted); }
+.mk-subheading { font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -.01em; }
+/* The serif emphasis: two or three words of a display line, once per screen. */
+.mk-em { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 1.08em; letter-spacing: 0; }
+
+/* ---------- Label: [ UPPERCASE ] ---------- */
+.mk-label {
+  display: inline-block;
+  font-size: 12px; line-height: 1; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+.mk-label::before { content: "[\00a0"; }
+.mk-label::after  { content: "\00a0]"; }
+.mk-label--accent { color: var(--accent-ink); }
+
+/* ---------- Wordmark ---------- */
+.mk-wordmark {
+  display: inline-flex; align-items: center; gap: .32em;
+  font-family: var(--font-sans); font-size: 20px; line-height: 1; letter-spacing: -.02em;
+  color: var(--ink); white-space: nowrap;
+}
+.mk-wordmark__glyph { width: .82em; height: .82em; color: var(--accent-ink); flex: none; }
+.mk-wordmark__mlk  { font-weight: 400; }
+.mk-wordmark__name { font-weight: 600; }
+.mk-wordmark--lg { font-size: 32px; }
+.mk-wordmark--xl { font-size: 56px; letter-spacing: -.03em; }
+
+/* ---------- Buttons ---------- */
+.mk-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6em;
+  height: 48px; padding: 0 var(--space-5);
+  border-radius: var(--radius-pill); border: 1px solid transparent;
+  background: var(--accent); color: var(--on-accent);
+  font-family: var(--font-sans); font-size: 15px; font-weight: 500; line-height: 1; letter-spacing: -.005em;
+  cursor: pointer; white-space: nowrap; text-decoration: none;
+}
+.mk-button:hover { filter: brightness(.94); }
+.mk-button--ghost { background: transparent; border-color: var(--line); color: var(--ink); }
+.mk-button--ghost:hover { filter: none; border-color: var(--ink); }
+.mk-button--inverse { background: var(--ink); color: var(--surface); }
+.mk-button--sm { height: 40px; padding: 0 var(--space-4); font-size: 14px; }
+.mk-button--icon { width: 48px; padding: 0; }
+.mk-button--icon.mk-button--sm { width: 40px; }
+.mk-button svg { width: 18px; height: 18px; flex: none; }
+.mk-link { display: inline-flex; align-items: center; gap: .5em; font-weight: 500; color: var(--ink); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.mk-link:hover { border-color: var(--ink); }
+.mk-link svg { width: 16px; height: 16px; }
+
+/* ---------- Language switch ---------- */
+.mk-lang { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: var(--radius-pill); }
+.mk-lang__opt {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  font-family: var(--font-sans); font-size: 12px; font-weight: 500; line-height: 1; letter-spacing: .08em;
+  padding: 9px 12px; border-radius: var(--radius-pill); color: var(--ink-muted);
+}
+.mk-lang__opt[aria-current="true"] { background: var(--ink); color: var(--surface); }
+.mk-lang__opt:hover:not([aria-current="true"]) { color: var(--ink); }
+
+/* ---------- Nav ---------- */
+.mk-nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding-block: var(--space-5); }
+.mk-nav__links { display: flex; align-items: center; gap: var(--space-6); list-style: none; margin: 0; padding: 0; }
+.mk-nav__links a { font-size: 15px; font-weight: 500; letter-spacing: -.005em; color: var(--ink-muted); }
+.mk-nav__links a:hover, .mk-nav__links a[aria-current="page"] { color: var(--ink); }
+.mk-nav__end { display: flex; align-items: center; gap: var(--space-4); }
+@media (max-width: 900px) { .mk-nav__links { display: none; } }
+
+/* ---------- Cards in a hairline grid ---------- */
+.mk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.mk-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.mk-card { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6); min-height: 300px; background: var(--surface); }
+.mk-card__body { color: var(--ink-muted); }
+.mk-card__foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+@media (max-width: 900px) { .mk-grid, .mk-grid--2 { grid-template-columns: 1fr; } .mk-card { min-height: 0; padding: var(--space-5); } }
+
+/* ---------- Stat ---------- */
+.mk-stat { display: grid; grid-template-columns: auto 1fr; align-items: end; gap: var(--space-5); }
+.mk-stat__value { font-size: clamp(64px, 9vw, 96px); line-height: .95; letter-spacing: -.04em; font-weight: 500; font-variant-numeric: lining-nums tabular-nums; }
+.mk-stat__note { font-family: var(--font-serif); font-style: italic; font-size: 18px; line-height: 1.4; color: var(--ink-muted); max-width: 26ch; padding-bottom: .4em; }
+@media (max-width: 640px) { .mk-stat { grid-template-columns: 1fr; gap: var(--space-3); } }
+
+/* ---------- Quote ---------- */
+.mk-quote { margin: 0; max-width: 30ch; }
+.mk-quote p { font-family: var(--font-serif); font-style: italic; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.25; max-width: none; }
+.mk-quote footer { margin-top: var(--space-5); }
+
+/* ---------- Footer ---------- */
+.mk-footer { border-top: 1px solid var(--line); padding-block: var(--space-7) var(--space-6); }
+.mk-footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: var(--space-6); }
+.mk-footer__col ul { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: var(--space-2); }
+.mk-footer__col a { font-size: 15px; color: var(--ink-muted); }
+.mk-footer__col a:hover { color: var(--ink); }
+.mk-footer__base { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-muted); }
+@media (max-width: 760px) { .mk-footer__grid { grid-template-columns: 1fr 1fr; } .mk-footer__base { flex-direction: column; align-items: flex-start; } }
+
+/* ---------- Glass: the one bold thing. ----------
+   Markup:
+   <section class="mk-glass mk-on-dark">
+     <div class="mk-glass__scene"></div>        soft blurred light, no filter dependency
+     <div class="mk-glass__refract"></div>      same scene, sliced per rib by the #mk-reed SVG filter
+     <div class="mk-glass__ribs"></div>         rib highlights and shadows
+     <div class="mk-glass__tint"></div>         legibility tint (photos)
+     <div class="mk-glass__daylight"></div>     cold blue light (optional)
+     <div class="mk-glass__grain"></div>        film grain
+     <div class="mk-glass__content">…</div>
+   </section>
+   The #mk-reed filter (see README, Glass) must be inline in the same document. */
+.mk-glass { position: relative; isolation: isolate; overflow: hidden; background: var(--surface-dark); }
+.mk-glass__scene, .mk-glass__refract {
+  position: absolute; inset: -12%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(56% 62% at 16% 74%, var(--scene-a) 0%, rgba(0,0,0,0) 64%),
+    radial-gradient(44% 56% at 84% 26%, var(--scene-b) 0%, rgba(0,0,0,0) 62%),
+    radial-gradient(72% 70% at 54% 54%, var(--scene-c) 0%, rgba(0,0,0,0) 72%),
+    linear-gradient(180deg, var(--surface-dark-raised) 0%, var(--surface-dark) 100%);
+  filter: blur(var(--glass-blur));
+}
+.mk-glass__refract { z-index: 1; filter: blur(var(--glass-blur)) url(#mk-reed); }
+.mk-glass--image .mk-glass__scene, .mk-glass--image .mk-glass__refract { background: var(--glass-image) center / cover no-repeat; }
+/* A photograph that is ALREADY reeded glass (hero-glass.jpg, footer-glass.jpg): no blur, no refraction, no CSS ribs. Grain, tint and daylight only. */
+.mk-glass--photo .mk-glass__scene { inset: 0; background: var(--glass-image) center / cover no-repeat; filter: none; }
+.mk-glass--photo .mk-glass__refract, .mk-glass--photo .mk-glass__ribs { display: none; }
+/* Tint: keeps ink-on-dark legible over any photo; darker on the text side. */
+.mk-glass__tint { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, rgba(27,24,22,.78) 0%, rgba(27,24,22,.46) 48%, rgba(27,24,22,.18) 100%); }
+.mk-cta .mk-glass__tint, .mk-glass--centered .mk-glass__tint { background: rgba(27,24,22,.52); }
+/* Daylight: the blue, as cold light coming through the panels, top-right. Never a UI colour. */
+.mk-glass__daylight { position: absolute; inset: 0; z-index: 2; pointer-events: none; mix-blend-mode: screen; opacity: .85; background: radial-gradient(42% 70% at 86% 18%, var(--light-cool) 0%, rgba(0,0,0,0) 70%); }
+.mk-glass__ribs {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 32%, rgba(0,0,0,.22) 100%),
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.16) 0px, rgba(255,255,255,.06) 2px, rgba(255,255,255,0) 7px,
+      rgba(0,0,0,0) calc(var(--glass-rib) - 8px), rgba(0,0,0,.22) calc(var(--glass-rib) - 2px), rgba(0,0,0,.46) var(--glass-rib));
+}
+.mk-glass__grain {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  opacity: var(--glass-grain); mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+  background-size: 240px 240px;
+}
+.mk-glass__content { position: relative; z-index: 4; }
+
+/* Hero inside the glass */
+.mk-hero { padding-block: var(--space-11) var(--space-9); }
+.mk-hero__inner { display: grid; gap: var(--space-6); max-width: 18ch; }
+.mk-hero__inner .mk-lead { color: var(--ink-on-dark-muted); max-width: 48ch; }
+.mk-hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+@media (max-width: 900px) { .mk-hero { padding-block: var(--space-9) var(--space-8); } }
+@media (max-width: 640px) { .mk-hero { padding-block: var(--space-8) var(--space-7); } }
+
+/* CTA band inside the glass */
+.mk-cta { padding-block: var(--space-10); text-align: center; }
+.mk-cta__inner { display: grid; justify-items: center; gap: var(--space-5); margin-inline: auto; max-width: 22ch; }
+.mk-cta__inner .mk-lead { color: var(--ink-on-dark-muted); max-width: 40ch; }
+@media (max-width: 640px) { .mk-cta { padding-block: var(--space-8); } }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* =====================================================================
+   Site extensions. New mk- classes only, built from the same tokens,
+   so every Lead Hunters and studio page composes from one stylesheet.
+   ===================================================================== */
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+[id] { scroll-margin-top: var(--space-6); }
+::selection { background: var(--ink); color: var(--surface); }
+ul, ol { margin: 0; padding: 0; }
+.mk-on-dark ::selection { background: var(--ink-on-dark); color: var(--surface-dark); }
+
+/* Accessibility helpers */
+.mk-sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.mk-skip {
+  position: absolute; left: var(--space-4); top: var(--space-4); z-index: 100;
+  transform: translateY(-200%);
+  background: var(--ink); color: var(--surface);
+  padding: var(--space-3) var(--space-5); border-radius: var(--radius-pill);
+  font-size: 15px; font-weight: 500;
+}
+.mk-skip:focus { transform: none; }
+
+/* ---------- Brand: wordmark plus the audience label (accountants site) ---------- */
+.mk-brand { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px var(--space-3); }
+.mk-brand .mk-label { padding-top: 2px; }
+@media (max-width: 520px) { .mk-brand { flex-direction: column; align-items: flex-start; } }
+
+/* ---------- Nav additions: relative anchor for the menu panel ---------- */
+.mk-nav { position: relative; z-index: 5; }
+@media (max-width: 640px) { .mk-nav__cta { display: none; } }
+
+/* ---------- Menu: the phone and tablet replacement for mk-nav__links ---------- */
+.mk-menu { display: none; }
+@media (max-width: 900px) { .mk-menu { display: block; } }
+.mk-menu > summary { list-style: none; }
+.mk-menu > summary::-webkit-details-marker { display: none; }
+.mk-menu__close { display: none; }
+.mk-menu[open] .mk-menu__open { display: none; }
+.mk-menu[open] .mk-menu__close { display: inline; }
+.mk-menu__panel {
+  position: absolute; left: var(--gutter); right: var(--gutter); top: calc(100% - var(--space-2));
+  background: var(--surface-raised); border: 1px solid var(--line);
+  padding: var(--space-3) var(--space-5) var(--space-5);
+}
+@media (max-width: 640px) { .mk-menu__panel { left: var(--space-4); right: var(--space-4); } }
+.mk-menu__panel ul { list-style: none; }
+.mk-menu__panel li + li { border-top: 1px solid var(--line); }
+.mk-menu__panel li > a { display: block; padding-block: var(--space-4); font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -.01em; }
+.mk-menu__panel .mk-button { margin-top: var(--space-4); width: 100%; }
+.mk-menu__lang { display: none; padding-top: var(--space-4); border-top: 1px solid var(--line); }
+@media (max-width: 520px) { .mk-nav__end > .mk-lang { display: none; } .mk-menu__lang { display: block; } }
+
+/* ---------- Glass photographs ----------
+   Declared here, not in a page's style attribute: a relative url() inside a custom
+   property resolves against the stylesheet that uses it in some browsers and against
+   the page in others. Declared and used in this file, it resolves the same everywhere. */
+.mk-photo--hero-glass { --glass-image: url(../img/hero-glass.jpg); --glass-image-sm: url(../img/hero-glass-900.jpg); }
+.mk-photo--footer-glass { --glass-image: url(../img/footer-glass.jpg); }
+.mk-photo--selecting-leads { --glass-image: url(../img/selecting-leads.jpg); }
+.mk-photo--copywriting { --glass-image: url(../img/copywriting.jpg); }
+.mk-photo--cold-emailing { --glass-image: url(../img/cold-emailing.jpg); }
+.mk-photo--cold-emailing-accountants { --glass-image: url(../img/cold-emailing-accountants.jpg); }
+.mk-photo--receiving-emails { --glass-image: url(../img/receiving-emails.jpg); }
+.mk-photo--appointment-booking { --glass-image: url(../img/appointment-booking.jpg); }
+.mk-photo--meeting { --glass-image: url(../img/meeting.jpg); }
+.mk-photo--agenda { --glass-image: url(../img/agenda.jpg); }
+
+/* ---------- Glass hero composition ---------- */
+.mk-glass--hero { min-height: min(100svh, 980px); display: flex; flex-direction: column; }
+/* The hero's tint also shades the nav line and the key-figures line, where the photo is brightest. */
+.mk-glass--hero .mk-glass__tint {
+  background:
+    linear-gradient(180deg, rgba(27,24,22,.62) 0%, rgba(27,24,22,0) 20%, rgba(27,24,22,0) 58%, rgba(27,24,22,.78) 100%),
+    linear-gradient(90deg, rgba(27,24,22,.78) 0%, rgba(27,24,22,.46) 48%, rgba(27,24,22,.28) 100%);
+}
+.mk-glass--hero .mk-glass__daylight { opacity: .6; background: radial-gradient(40% 60% at 84% 42%, var(--light-cool) 0%, rgba(0,0,0,0) 70%); }
+.mk-glass--hero > .mk-glass__content { flex: 1; display: flex; flex-direction: column; }
+.mk-glass--hero .mk-hero { flex: 1; display: flex; flex-direction: column; padding-block: var(--space-10) var(--space-7); }
+.mk-hero__inner { max-width: none; }
+.mk-hero__inner h1 { max-width: 15ch; }
+.mk-hero__inner h1.mk-display { max-width: 18ch; }
+.mk-hero--page { padding-block: var(--space-10) var(--space-9); }
+@media (max-width: 900px) {
+  .mk-glass--hero .mk-hero { padding-block: var(--space-9) var(--space-6); }
+  .mk-hero--page { padding-block: var(--space-9) var(--space-8); }
+}
+@media (max-width: 640px) {
+  .mk-glass--hero .mk-hero { padding-block: var(--space-8) var(--space-6); }
+  .mk-hero--page { padding-block: var(--space-8) var(--space-7); }
+  .mk-glass__tint, .mk-glass--hero .mk-glass__tint { background: linear-gradient(180deg, rgba(27,24,22,.74) 0%, rgba(27,24,22,.7) 50%, rgba(27,24,22,.84) 100%); }
+  .mk-glass--photo .mk-glass__scene { background-position: 22% center; }
+  .mk-hero__actions .mk-button { width: 100%; }
+}
+/* Smaller photo for small screens; set --glass-image-sm next to --glass-image. */
+@media (max-width: 900px) { .mk-glass--photo .mk-glass__scene { background-image: var(--glass-image-sm, var(--glass-image)); } }
+
+/* Key figures: three small figures on the hero's base line. Not Stats: no display size. */
+.mk-keyfigs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: var(--space-5) var(--space-6); margin-top: var(--space-9); padding-top: var(--space-5); border-top: 1px solid var(--line); }
+.mk-keyfigs__caption { font-size: 15px; line-height: 1.4; font-weight: 400; letter-spacing: 0; color: var(--ink-muted); max-width: 20ch; }
+.mk-keyfigs__list { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.mk-keyfigs__item { display: grid; gap: var(--space-2); align-content: start; padding-right: var(--space-5); }
+.mk-keyfigs__item + .mk-keyfigs__item { padding-left: var(--space-5); border-left: 1px solid var(--line); }
+.mk-keyfigs__value { font-size: clamp(24px, 2.4vw, 30px); line-height: 1.1; letter-spacing: -.015em; font-weight: 500; font-variant-numeric: lining-nums tabular-nums; }
+.mk-keyfigs__note { font-size: 15px; line-height: 1.4; color: var(--ink-muted); }
+@media (max-width: 900px) { .mk-keyfigs { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  .mk-keyfigs { margin-top: var(--space-8); }
+  .mk-keyfigs__list { grid-template-columns: 1fr; }
+  .mk-keyfigs__item { grid-template-columns: 4.2em 1fr; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; }
+  .mk-keyfigs__item + .mk-keyfigs__item { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+}
+
+/* CTA band: the inner column is sized by its own text, not by the body's ch. */
+.mk-cta__inner { max-width: 820px; }
+.mk-cta__inner h2 { max-width: 16ch; }
+.mk-cta__inner .mk-lead { color: var(--ink-on-dark); }
+.mk-cta .mk-glass__tint { background: radial-gradient(70% 80% at 50% 50%, rgba(27,24,22,.72) 0%, rgba(27,24,22,.5) 100%); }
+
+/* Consecutive sections on the same ground share one gap instead of two. */
+.mk-section:not(.mk-section--band) + .mk-section:not(.mk-section--band) { padding-top: 0; }
+
+/* ---------- Section head: label, title, lead; optional link on the right ---------- */
+.mk-head { display: grid; gap: var(--space-4); margin-bottom: var(--space-8); }
+.mk-head .mk-title { max-width: 22ch; }
+.mk-head .mk-lead { margin-top: var(--space-2); }
+.mk-head--split { grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: var(--space-6); }
+.mk-head--split > :not(.mk-head__aside) { grid-column: 1; }
+.mk-head__aside { grid-column: 2; grid-row: 1 / span 3; align-self: end; }
+@media (max-width: 760px) {
+  .mk-head { margin-bottom: var(--space-7); }
+  .mk-head--split { grid-template-columns: 1fr; }
+  .mk-head__aside { grid-column: 1; grid-row: auto; justify-self: start; margin-top: var(--space-2); }
+}
+
+/* ---------- Split: text beside a photograph ---------- */
+.mk-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-9); align-items: center; }
+.mk-split--top { align-items: start; }
+.mk-split--rev > :first-child { order: 2; }
+.mk-split__text { display: grid; gap: var(--space-5); justify-items: start; }
+.mk-split__text > .mk-title { max-width: 18ch; }
+@media (max-width: 900px) {
+  .mk-split { grid-template-columns: 1fr; gap: var(--space-7); }
+  .mk-split--rev > :first-child { order: 0; }
+}
+
+/* ---------- Figure: plain photograph, square corners, label caption below ---------- */
+.mk-figure { margin: 0; }
+.mk-figure img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: var(--surface-sage); }
+.mk-figure figcaption { margin-top: var(--space-3); }
+
+/* ---------- Statement: one sentence that states the offer ---------- */
+.mk-statement { display: grid; gap: var(--space-6); }
+.mk-statement > .mk-title { max-width: 26ch; }
+.mk-statement__body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6) var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--line); }
+.mk-statement__body p { color: var(--ink-muted); }
+@media (max-width: 760px) { .mk-statement__body { grid-template-columns: 1fr; } }
+
+/* ---------- Stats: up to two side by side, or stacked on hairlines ---------- */
+.mk-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+.mk-stats--stack { grid-template-columns: 1fr; gap: 0; }
+.mk-stats--stack .mk-stat { padding-block: var(--space-5); border-top: 1px solid var(--line); }
+.mk-stats--stack .mk-stat:last-child { border-bottom: 1px solid var(--line); }
+.mk-stat__value--compact { font-size: clamp(56px, 6.4vw, 80px); }
+@media (max-width: 640px) { .mk-stats { grid-template-columns: 1fr; } }
+
+/* ---------- Rows: hairline list, title on the left, text on the right ---------- */
+.mk-rows { list-style: none; border-bottom: 1px solid var(--line); }
+.mk-row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-3) var(--space-8); padding-block: var(--space-5); border-top: 1px solid var(--line); }
+.mk-row__title { font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -.01em; }
+.mk-row__text { color: var(--ink-muted); }
+.mk-rows--compact .mk-row { grid-template-columns: 1fr; padding-block: var(--space-4); }
+@media (max-width: 760px) { .mk-row { grid-template-columns: 1fr; } }
+
+/* Ticks: a plain hairline list for short items, no bullets, no icons */
+.mk-ticks { list-style: none; border-top: 1px solid var(--line); width: 100%; }
+.mk-ticks li { padding-block: var(--space-3); border-bottom: 1px solid var(--line); max-width: var(--measure); }
+.mk-ticks--muted li { color: var(--ink-muted); }
+
+/* ---------- Names: client firms typeset in a hairline row ---------- */
+.mk-names { list-style: none; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.mk-names li { background: var(--surface); padding: var(--space-5) var(--space-4); text-align: center; font-size: 20px; line-height: 1.2; font-weight: 500; letter-spacing: -.015em; color: var(--ink-muted); }
+@media (max-width: 900px) { .mk-names { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .mk-names { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- Pledge: the guarantee, one line, hairlines above and below ---------- */
+.mk-pledge { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-5) var(--space-8); align-items: end; padding-block: var(--space-7); border-block: 1px solid var(--line); }
+.mk-pledge__text { display: grid; gap: var(--space-4); }
+.mk-pledge__text .mk-title { max-width: 24ch; }
+@media (max-width: 900px) { .mk-pledge { grid-template-columns: 1fr; align-items: start; } }
+
+/* ---------- Grids: four across, then two, then one ---------- */
+.mk-grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1100px) { .mk-grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .mk-grid--4 { grid-template-columns: 1fr; } }
+.mk-card--short { min-height: 220px; }
+.mk-card .mk-heading { max-width: 20ch; }
+.mk-section--band .mk-card, .mk-section--band .mk-names li { background: var(--surface-raised); }
+.mk-card__step { font-size: 15px; font-weight: 500; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+/* ---------- Pricing ---------- */
+.mk-plan { gap: var(--space-5); min-height: 0; }
+.mk-plan__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: 24px; }
+.mk-plan__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 var(--space-2); }
+.mk-plan__amount { font-size: clamp(40px, 4vw, 52px); line-height: 1; letter-spacing: -.03em; font-weight: 500; font-variant-numeric: lining-nums tabular-nums; }
+.mk-plan__per { font-size: 15px; color: var(--ink-muted); }
+.mk-plan__setup { font-size: 15px; color: var(--ink-muted); margin-top: calc(var(--space-2) * -1); }
+.mk-plan .mk-ticks { margin-block: var(--space-2) var(--space-4); }
+.mk-plan .mk-ticks li { font-size: 15px; }
+.mk-plan .mk-button { margin-top: auto; width: 100%; }
+.mk-plan--featured { background: var(--surface-raised); }
+
+/* ---------- FAQ: details on hairlines, arrow pill turns when open ---------- */
+.mk-faq { border-bottom: 1px solid var(--line); }
+.mk-faq__item { border-top: 1px solid var(--line); }
+.mk-faq__item > summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-5);
+  padding-block: var(--space-5);
+  font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -.01em;
+}
+.mk-faq__item > summary::-webkit-details-marker { display: none; }
+.mk-faq__icon {
+  flex: none; display: inline-grid; place-items: center; width: 40px; height: 40px;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  transition: transform .2s ease;
+}
+.mk-faq__icon svg { width: 16px; height: 16px; transform: rotate(90deg); }
+.mk-faq__item[open] .mk-faq__icon { transform: rotate(180deg); }
+.mk-faq__item > summary:hover .mk-faq__icon { border-color: var(--ink); }
+.mk-faq__answer { padding-bottom: var(--space-6); color: var(--ink-muted); }
+
+/* ---------- Contact: form on a raised panel ---------- */
+.mk-panel { background: var(--surface-raised); border: 1px solid var(--line); padding: var(--space-7); }
+@media (max-width: 640px) { .mk-panel { padding: var(--space-5); } }
+.mk-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5) var(--space-6); }
+.mk-field { display: grid; gap: var(--space-2); }
+.mk-field--full { grid-column: 1 / -1; }
+.mk-field label { font-size: 15px; font-weight: 500; color: var(--ink-muted); }
+.mk-field input, .mk-field textarea {
+  width: 100%; font: inherit; font-size: 17px; color: var(--ink);
+  background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  padding: var(--space-2) 0 var(--space-3);
+}
+.mk-field textarea { min-height: 128px; resize: vertical; line-height: 1.5; }
+.mk-field input:hover, .mk-field textarea:hover { border-bottom-color: var(--ink-muted); }
+.mk-field input:focus, .mk-field textarea:focus { outline: none; border-bottom-color: var(--ink); box-shadow: 0 1px 0 0 var(--ink); }
+.mk-field input:focus-visible, .mk-field textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: var(--radius-sm); }
+.mk-form__foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-5); margin-top: var(--space-3); }
+.mk-form__note { font-size: 15px; color: var(--ink-muted); }
+.mk-form__note a { border-bottom: 1px solid var(--line); }
+@media (max-width: 640px) { .mk-form { grid-template-columns: 1fr; } .mk-form__foot .mk-button { width: 100%; } }
+
+/* ---------- Team: roles on hairlines ---------- */
+.mk-team { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.mk-team li { background: var(--surface); padding: var(--space-5); display: grid; gap: var(--space-3); align-content: start; min-height: 160px; }
+.mk-team__role { font-size: 22px; line-height: 1.25; font-weight: 500; letter-spacing: -.01em; }
+@media (max-width: 1100px) { .mk-team { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .mk-team { grid-template-columns: 1fr; } .mk-team li { min-height: 0; } }
+
+.mk-quote blockquote { margin: 0; }
+figure.mk-quote { max-width: none; }
+figure.mk-quote p { max-width: 24ch; }
+.mk-split__text > .mk-stats, .mk-split__text > .mk-rows, .mk-split__text > .mk-ticks { width: 100%; }
+
+/* ---------- Proof band: quote beside stacked stats ---------- */
+.mk-proof { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-9); align-items: start; }
+.mk-proof__lead { display: grid; gap: var(--space-7); }
+@media (max-width: 900px) { .mk-proof { grid-template-columns: 1fr; gap: var(--space-8); } }
+
+/* ---------- Feature: a method chapter (label, title, lead, text, ticks, photo) ---------- */
+.mk-feature + .mk-feature { margin-top: var(--space-10); }
+@media (max-width: 900px) { .mk-feature + .mk-feature { margin-top: var(--space-9); } }
+.mk-feature .mk-split__text p:not(.mk-lead) { color: var(--ink-muted); }
+
+/* ---------- Long-form text (legal) ---------- */
+.mk-doc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: var(--space-9); align-items: start; }
+.mk-toc { position: sticky; top: var(--space-6); display: grid; gap: var(--space-4); }
+.mk-toc ol { list-style: none; display: grid; gap: var(--space-2); }
+.mk-toc a { font-size: 15px; color: var(--ink-muted); }
+.mk-toc a:hover { color: var(--ink); }
+@media (max-width: 900px) { .mk-doc { grid-template-columns: 1fr; gap: var(--space-7); } .mk-toc { position: static; } }
+.mk-prose { max-width: var(--measure); }
+.mk-prose > section + section { margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--line); }
+.mk-prose h2 { font-size: clamp(24px, 2.4vw, 30px); line-height: 1.15; letter-spacing: -.015em; margin-bottom: var(--space-4); }
+.mk-prose h3 { font-size: 22px; line-height: 1.3; letter-spacing: -.01em; margin: var(--space-5) 0 var(--space-3); }
+.mk-prose p + p, .mk-prose p + ul, .mk-prose ul + p { margin-top: var(--space-4); }
+.mk-prose ul { padding-left: 1.2em; }
+.mk-prose li + li { margin-top: var(--space-2); }
+.mk-prose a { border-bottom: 1px solid var(--line); }
+.mk-prose a:hover { border-color: var(--ink); }
+
+/* ---------- Footer additions ---------- */
+@media (max-width: 480px) { .mk-footer__grid { grid-template-columns: 1fr; } }
+.mk-footer__col a { overflow-wrap: anywhere; }
+.mk-footer__desc { margin-top: var(--space-4); max-width: 30ch; font-size: 15px; line-height: 1.5; color: var(--ink-muted); }
+.mk-footer__col > .mk-label { display: block; }
+.mk-footer__legal { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); }
+.mk-footer__legal a:hover { color: var(--ink); }
+
+/* ---------- Utilities kept to a minimum ---------- */
+.mk-mt-5 { margin-top: var(--space-5); }
+.mk-mt-7 { margin-top: var(--space-7); }
+.mk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); }
