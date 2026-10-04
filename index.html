@@ -1,598 +1,73 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="fr" data-theme="leadhunters">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>mlkLeadHunters — Le cold email qui fait grandir votre cabinet</title>
-<meta name="description" content="Prospection par cold email clé en main pour cabinets d'expertise comptable. Des rendez-vous qualifiés avec les dirigeants de votre zone, dans le respect de votre déontologie.">
-<link rel="canonical" href="https://mlkleadhunters.fr/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  /* Language chooser: English-first browsers go to en/, everyone else to fr/. Without JavaScript the links below do the job. */
+  (function () {
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+    var target = /^en/i.test(String(langs[0] || '')) ? 'en/' : 'fr/';
+    location.replace(target + location.search + location.hash);
+  })();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=fr/"></noscript>
+<title>mlkleadhunters — Cold email pour experts-comptables · Cold email for accountants</title>
+<meta name="description" content="Prospection par cold email clé en main pour cabinets d’expertise comptable. Des rendez-vous qualifiés avec les dirigeants de votre zone, dans le respect de votre déontologie.">
+<link rel="alternate" hreflang="fr" href="https://mlkleadhunters.fr/fr/">
+<link rel="alternate" hreflang="en" href="https://mlkleadhunters.fr/en/">
+<link rel="alternate" hreflang="x-default" href="https://mlkleadhunters.fr/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="mlkLeadHunters">
-<meta property="og:title" content="mlkLeadHunters — Le cold email qui fait grandir votre cabinet">
-<meta property="og:description" content="Prospection par cold email clé en main pour cabinets d'expertise comptable, dans le respect de votre déontologie.">
+<meta property="og:site_name" content="mlkleadhunters">
+<meta property="og:title" content="mlkleadhunters — Cold email pour experts-comptables · Cold email for accountants">
+<meta property="og:description" content="Prospection par cold email clé en main pour cabinets d’expertise comptable, dans le respect de votre déontologie.">
 <meta property="og:url" content="https://mlkleadhunters.fr/">
+<meta property="og:image" content="https://mlkleadhunters.fr/assets/img/hero-glass.jpg">
 <meta property="og:locale" content="fr_FR">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mlkLeadHunters — Le cold email qui fait grandir votre cabinet">
-<meta name="twitter:description" content="Des rendez-vous qualifiés pour votre cabinet, en toute conformité.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23231A12'/%3E%3Ccircle cx='12' cy='12' r='7' stroke='%23EF571D' stroke-width='1.8' fill='none'/%3E%3Cpath d='M12 4v4M12 16v4M4 12h4M16 12h4' stroke='%23EF571D' stroke-width='1.8'/%3E%3Ccircle cx='12' cy='12' r='1.9' fill='%23EF571D'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --font-display:'Questrial', system-ui, sans-serif;
-    --font-body:'Questrial', system-ui, sans-serif;
-    --paper:#F3E9DB;
-    --paper-2:#F8F2E9;
-    --sand:#E7D5BE;
-    --ink:#231A12;
-    --ink-soft:#6E6053;
-    --line:#DBC9B1;
-    --orange:#EF571D;
-    --purple:#211C63;
-    --purple-2:#332B8F;
-    --peri:#C8CCEF;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-family:var(--font-body);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
-  h1,h2,h3,.display{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em;line-height:1.05}
-  a{color:inherit;text-decoration:none}
-  img{display:block;max-width:100%}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
-  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);display:inline-flex;align-items:center;gap:8px}
-  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange)}
-  .btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;padding:14px 24px;border-radius:10px;border:1.5px solid transparent;cursor:pointer;transition:.18s}
-  .btn-primary{background:var(--orange);color:#fff}
-  .btn-primary:hover{background:#d8460f;transform:translateY(-1px)}
-  .btn-dark{background:var(--ink);color:var(--paper)}
-  .btn-dark:hover{background:#000}
-  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
-  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
-  .btn-ghost-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
-  .btn-ghost-light:hover{background:#fff;color:var(--ink)}
-  .arrow{font-size:15px}
-
-  /* NAV overlays the hero */
-  .nav{position:sticky;top:16px;z-index:50;margin:16px auto -74px;max-width:1120px;padding:0 16px}
-  .nav-inner{background:var(--ink);color:var(--paper);border-radius:14px;display:flex;align-items:center;justify-content:space-between;padding:12px 14px 12px 20px;box-shadow:0 10px 30px rgba(35,26,18,.28)}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.01em}
-  .brand .mark{width:20px;height:20px;flex:none}
-  .brand b{font-weight:800}
-  .brand span{font-weight:500;opacity:.9}
-  .nav-links{display:flex;gap:26px;font-size:14px;font-weight:500}
-  .nav-links a{opacity:.85;transition:.15s}
-  .nav-links a:hover{opacity:1;color:var(--orange)}
-  .nav-cta{padding:10px 18px;font-size:14px}
-  .lang{border:1.5px solid rgba(255,255,255,.4);border-radius:8px;padding:7px 11px;font-size:12.5px;font-weight:700;letter-spacing:.08em;transition:.15s}
-  .lang:hover{background:#fff;color:var(--ink)}
-  .menu-btn{display:none;flex-direction:column;justify-content:center;gap:4px;width:42px;height:38px;border:none;background:transparent;cursor:pointer;padding:0}
-  .menu-btn span{display:block;height:2px;width:22px;background:var(--paper);border-radius:2px;transition:.2s;margin:0 auto}
-  .menu-btn.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-  .menu-btn.open span:nth-child(2){opacity:0}
-  .menu-btn.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-  .mobile-menu{position:absolute;top:calc(100% + 10px);left:16px;right:16px;z-index:55;
-    background:var(--ink);color:var(--paper);border-radius:14px;box-shadow:0 18px 40px rgba(35,26,18,.34);
-    overflow:hidden;max-height:0;opacity:0;transform:translateY(-10px);pointer-events:none;
-    transition:max-height .75s cubic-bezier(.16,1,.3,1),opacity .55s ease,transform .75s cubic-bezier(.16,1,.3,1)}
-  .mobile-menu.open{max-height:80vh;opacity:1;transform:translateY(0);pointer-events:auto}
-  .mm-inner{padding:12px}
-  .mobile-menu a{display:block;padding:12px 14px;font-size:15px;font-weight:500;border-radius:8px;
-    opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s cubic-bezier(.16,1,.3,1)}
-  .mobile-menu.open a{opacity:1;transform:none}
-  .mobile-menu.open a:nth-child(1){transition-delay:.14s}
-  .mobile-menu.open a:nth-child(2){transition-delay:.22s}
-  .mobile-menu.open a:nth-child(3){transition-delay:.30s}
-  .mobile-menu.open a:nth-child(4){transition-delay:.38s}
-  .mobile-menu.open a:nth-child(5){transition-delay:.46s}
-  .mobile-menu.open a:nth-child(6){transition-delay:.54s}
-  .mobile-menu a:hover{background:rgba(255,255,255,.06);color:var(--orange)}
-  /* Sticky mobile action bar */
-  .mobile-bar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px;gap:10px;background:linear-gradient(to top,rgba(243,233,219,.98),rgba(243,233,219,.86));backdrop-filter:blur(6px);border-top:1px solid var(--line)}
-  .mobile-bar .btn{flex:1;justify-content:center;padding:14px}
-
-  /* HERO — full-bleed cinematic */
-  .hero{position:relative;min-height:90vh;display:flex;align-items:flex-start;color:#fff;overflow:hidden;
-    background:
-      linear-gradient(90deg, rgba(18,12,7,.9) 0%, rgba(18,12,7,.55) 42%, rgba(18,12,7,.12) 100%),
-      repeating-linear-gradient(90deg, rgba(255,255,255,.055) 0 2px, rgba(0,0,0,.10) 2px 10px),
-      radial-gradient(120% 90% at 78% 25%, rgba(239,87,29,.34), transparent 55%),
-      url('cold_emailing_for_accountants.png');
-    background-size:auto,auto,auto,cover;
-    background-position:0 0,0 0,0 0,center;
-    background-repeat:no-repeat,repeat,no-repeat,no-repeat;
-    clip-path:polygon(0 0,100% 0,100% calc(100% - 52px),calc(100% - 52px) 100%,0 100%)}
-  .hero .wrap{padding-top:150px;padding-bottom:96px;position:relative;z-index:2}
-  .hero-content{max-width:640px}
-  .hero-content h1{font-size:clamp(40px,6.2vw,78px);font-weight:500;margin:18px 0 22px;text-shadow:0 2px 30px rgba(0,0,0,.25)}
-  .hero-content p{font-size:17px;color:#efe6da;max-width:46ch;margin-bottom:30px}
-  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-  .hero .eyebrow{color:#f6a071}
-  .hero .eyebrow::before{background:var(--orange)}
-
-  /* RESULTS strip under hero */
-  .results{background:var(--paper);padding:38px 0}
-  .results-inner{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:30px;align-items:center}
-  .results h3{font-family:var(--font-display);font-size:22px;font-weight:500;max-width:14ch}
-  .rstat .n{font-family:var(--font-display);font-size:40px;font-weight:600;line-height:1}
-  .rstat .n sup{color:var(--orange);font-size:20px;top:-.55em}
-  .rstat .l{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px}
-
-  /* INTRO */
-  .intro{padding:74px 0 40px}
-  .intro-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start;padding-top:44px}
-  .intro h2{font-size:clamp(26px,3vw,38px);font-weight:500;max-width:22ch}
-  .intro-side p{color:var(--ink-soft);font-size:15.5px;margin-bottom:18px}
-
-  /* ABOUT PANEL */
-  .stat .n{font-family:var(--font-display);font-size:52px;font-weight:600;line-height:1}
-  .stat .l{font-size:13px;color:var(--ink-soft);margin-top:4px;max-width:18ch}
-  .about{background:var(--purple);color:var(--paper);border-radius:22px;padding:56px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;margin:34px 0 0;
-    clip-path:polygon(0 0,100% 0,100% 100%,46px 100%,0 calc(100% - 46px))}
-  .about .eyebrow{color:var(--peri)}
-  .about .eyebrow::before{background:var(--peri)}
-  .about h2{font-size:clamp(28px,3.4vw,42px);font-weight:500;margin:14px 0 16px}
-  .about p{color:#cdc9ec;font-size:15.5px;margin-bottom:24px;max-width:42ch}
-
-  /* TRUSTED */
-  .trusted{padding:56px 0 10px;text-align:center}
-  .trusted .cap{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:22px}
-  .logos{display:flex;flex-wrap:wrap;gap:14px 46px;justify-content:center;align-items:center;opacity:.72}
-  .logos span{font-family:var(--font-display);font-weight:600;font-size:22px;letter-spacing:-.02em}
-
-  .section{padding:78px 0}
-  .section.sand{background:var(--sand)}
-  .head-center{text-align:center;max-width:720px;margin:0 auto 46px}
-  .head-center h2{font-size:clamp(28px,3.6vw,44px);font-weight:500;margin-top:12px}
-  .head-lead{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:40px}
-  .head-lead h2{font-size:clamp(26px,3.4vw,40px);font-weight:500;max-width:18ch}
-
-  /* SERVICES */
-  .svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .svc{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:28px 28px 30px;transition:.18s}
-  .svc:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(35,26,18,.08)}
-  .svc .ic{width:40px;height:40px;border-radius:10px;background:var(--purple);color:var(--peri);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-  .svc h3{font-size:20px;font-weight:600;margin-bottom:8px}
-  .svc p{color:var(--ink-soft);font-size:15px}
-
-  /* CASE STUDIES */
-  .case-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .case{position:relative;border-radius:16px;overflow:hidden;min-height:230px;padding:26px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;
-    clip-path:polygon(0 0,100% 0,100% 100%,34px 100%,0 calc(100% - 34px))}
-  .case .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin-bottom:8px}
-  .case h3{font-size:20px;font-weight:600;max-width:24ch}
-  .case:nth-child(1){background:linear-gradient(135deg,#221c63,#4a3f9e)}
-  .case:nth-child(2){background:linear-gradient(135deg,#5a2413,#c05a25)}
-  .case:nth-child(3){background:linear-gradient(135deg,#2a2410,#7b6a2f)}
-  .case:nth-child(4){background:linear-gradient(135deg,#243a2a,#4f7a52)}
-  .case-foot{display:flex;justify-content:space-between;align-items:center;margin-top:34px}
-  .case-foot a{font-weight:600}
-
-  /* HOW WE WORK */
-  .how{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
-  .how-media{border-radius:18px;height:440px;background:radial-gradient(120% 120% at 20% 20%,rgba(200,204,239,.5),transparent 60%),url('Agenda_Cold_Emailing.png');background-size:auto,cover;background-position:0 0,center;background-repeat:no-repeat,no-repeat}
-  .how h2{font-size:clamp(26px,3.2vw,40px);font-weight:500;margin-bottom:22px}
-  .check{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--line)}
-  .check:last-child{border-bottom:1px solid var(--line)}
-  .check .t{width:26px;height:26px;flex:none;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
-  .check b{font-weight:600}
-  .check span{display:block;color:var(--ink-soft);font-size:14px}
-
-  /* PIPELINE BAND */
-  .band{background:var(--purple);color:var(--paper);border-radius:22px;padding:52px 56px;display:grid;grid-template-columns:1.1fr repeat(3,auto);gap:36px;align-items:center}
-  .band h2{font-size:clamp(24px,2.6vw,32px);font-weight:500;max-width:16ch}
-  .band .s .n{font-family:var(--font-display);font-size:44px;font-weight:600;color:#fff}
-  .band .s .n sup{color:var(--orange);font-size:22px}
-  .band .s .l{font-size:13px;color:#cdc9ec;max-width:14ch}
-
-  /* TESTIMONIAL */
-  .quote-wrap{text-align:center;max-width:920px;margin:0 auto}
-  .quote{font-family:var(--font-display);font-weight:500;font-size:clamp(22px,2.8vw,32px);line-height:1.3}
-  .quote-by{display:inline-flex;align-items:center;gap:12px;margin-top:26px}
-  .quote-by .av{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--orange))}
-  .quote-by .who{text-align:left}
-  .quote-by b{font-weight:600;font-size:15px}
-  .quote-by small{display:block;color:var(--ink-soft);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
-
-  /* TEAM SLIDER */
-  .team-slider{position:relative}
-  .team-track{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-bottom:8px;
-    scrollbar-width:none;-ms-overflow-style:none}
-  .team-track::-webkit-scrollbar{display:none}
-  .member{flex:0 0 calc((100% - 36px)/3);scroll-snap-align:start}
-  .member .ph{height:280px;border-radius:14px;background:linear-gradient(160deg,#cdbfa9,#8f7a5f)}
-  .member:nth-child(1) .ph{background:linear-gradient(160deg,#4a3f9e,#c8ccef)}
-  .member:nth-child(2) .ph{background:linear-gradient(160deg,#7b6a2f,#e7d5be)}
-  .member:nth-child(3) .ph{background:linear-gradient(160deg,#c05a25,#f3e9db)}
-  .member:nth-child(4) .ph{background:linear-gradient(160deg,#211c63,#a79ede)}
-  .member:nth-child(5) .ph{background:linear-gradient(160deg,#5a2413,#e0a173)}
-  .member h3{font-family:var(--font-display);font-size:20px;font-weight:600;margin:14px 0 2px}
-  .member small{color:var(--ink-soft);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
-  .team-arrows{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
-  .t-arrow{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-size:17px;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center}
-  .t-arrow:hover{background:var(--ink);color:var(--paper)}
-
-  /* GUARANTEE SECTION */
-  .guarantee-sec{background:var(--purple);color:var(--paper);text-align:center;padding:86px 0;position:relative;overflow:hidden}
-  .guarantee-sec::before{content:"";position:absolute;inset:0;background:radial-gradient(90% 90% at 50% 0%,rgba(239,87,29,.20),transparent 60%)}
-  .guarantee-sec .wrap{position:relative;z-index:1}
-  .guarantee-sec h2{font-size:clamp(26px,3.6vw,44px);font-weight:500;max-width:26ch;margin:14px auto 30px;line-height:1.2}
-  .guarantee-sec h2 em{font-style:normal;color:#f6a071}
-  .guarantee-sec .eyebrow{color:var(--peri);justify-content:center}
-  .guarantee-sec .eyebrow::before{background:var(--peri)}
-
-  /* PRICING */
-  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
-  .plan{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:30px 28px;display:flex;flex-direction:column}
-  .plan.pop{background:var(--ink);color:var(--paper);border-color:var(--ink);position:relative}
-  .plan .tier{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
-  .plan.pop .tier{color:var(--peri)}
-  .plan .pop-tag{position:absolute;top:22px;right:22px;background:var(--orange);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px}
-  .plan .price{font-family:var(--font-display);font-size:44px;font-weight:600;margin:14px 0 2px}
-  .plan .price small{font-family:var(--font-body);font-size:15px;font-weight:500;color:var(--ink-soft)}
-  .plan.pop .price small{color:#c9c4ec}
-  .plan .setup{font-size:13.5px;color:var(--ink-soft);margin-bottom:20px}
-  .plan.pop .setup{color:#c9c4ec}
-  .plan ul{list-style:none;margin-bottom:26px;flex:1}
-  .plan li{font-size:14.5px;padding:9px 0 9px 24px;position:relative;border-top:1px solid var(--line)}
-  .plan.pop li{border-color:#3a3470}
-  .plan li::before{content:"✓";position:absolute;left:0;color:var(--orange);font-weight:700}
-  .plan .btn{justify-content:center;width:100%}
-
-  /* CONTACT */
-  .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:start}
-  .contact h2{font-size:clamp(28px,3.2vw,40px);font-weight:500;margin-bottom:14px}
-  .contact-side p{color:var(--ink-soft);font-size:15px;margin-bottom:26px;max-width:36ch}
-  .cbenefit{display:flex;gap:10px;font-size:14.5px;padding:8px 0;color:var(--ink-soft)}
-  .cbenefit::before{content:"✓";color:var(--orange);font-weight:700}
-  .field{margin-bottom:16px}
-  .field label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:7px}
-  .field input,.field textarea{width:100%;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:13px 15px;font-family:var(--font-body);font-size:15px;color:var(--ink)}
-  .field input:focus,.field textarea:focus{outline:none;border-color:var(--orange)}
-  .field textarea{min-height:120px;resize:vertical}
-  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .form-note{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:12px}
-
-  /* FOOTER */
-  .foot-cta{margin-top:78px;position:relative;color:var(--paper);border-radius:22px 22px 0 0;overflow:hidden;
-    background:radial-gradient(120% 120% at 80% 10%,rgba(239,87,29,.22),transparent 55%),linear-gradient(135deg,#1c1852,#2e2780)}
-  .foot-cta-inner{padding:70px 56px 0}
-  .foot-cta h2{font-size:clamp(30px,4vw,54px);font-weight:500;max-width:16ch}
-  .foot-cta p{color:#cdc9ec;margin:16px 0 26px;max-width:44ch}
-  .foot-nav{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px;padding:56px 56px 28px;margin-top:50px;border-top:1px solid rgba(255,255,255,.14)}
-  .foot-nav .brand{font-size:19px}
-  .foot-col h4{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#a7a2d6;margin-bottom:14px;font-weight:600}
-  .foot-col a{display:block;color:#e6e3f6;font-size:14px;padding:5px 0;opacity:.85}
-  .foot-col a:hover{opacity:1;color:var(--orange)}
-  .foot-bottom{padding:20px 56px;border-top:1px solid rgba(255,255,255,.14);display:flex;justify-content:space-between;font-size:12.5px;color:#a7a2d6;flex-wrap:wrap;gap:8px}
-
-  @media (max-width:900px){
-    .nav-links{display:none}
-    .menu-btn{display:flex}
-    .nav-cta{display:none}
-    .mobile-bar{display:flex}
-    body{padding-bottom:78px}
-    .hero{min-height:auto}
-    .hero .wrap{padding-top:130px;padding-bottom:70px}
-    .results-inner{grid-template-columns:1fr 1fr;gap:24px}
-    .intro-grid,.how,.contact-grid,.about{grid-template-columns:1fr}
-    .about{clip-path:none;padding:36px}
-    .svc-grid,.case-grid,.price-grid,.field-row{grid-template-columns:1fr}
-    .member{flex:0 0 86%}
-    .band{grid-template-columns:1fr 1fr}
-    .head-lead{flex-direction:column;align-items:flex-start}
-    .foot-nav{grid-template-columns:1fr 1fr}
-    .foot-nav > div:first-child{grid-column:1/-1}
-    .foot-cta-inner,.foot-nav,.foot-bottom{padding-left:28px;padding-right:28px}
-  }
-  @media (max-width:560px){
-    .wrap{padding:0 20px}
-    .results-inner,.band{grid-template-columns:1fr}
-  }
-</style>
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1b1816">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/instrument-sans-latin.woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/mk.css">
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="brand">
-      <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#EF571D" stroke-width="2"/><path d="M12 2v6M12 16v6M2 12h6M16 12h6" stroke="#EF571D" stroke-width="2"/><circle cx="12" cy="12" r="2.4" fill="#EF571D"/></svg>
-      <span><b>mlk</b>LeadHunters</span>
-    </div>
-    <div class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#work">Études de cas</a>
-      <a href="notre-methode.html">Notre méthode</a>
-      <a href="#pricing">Tarifs</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center"><a class="lang" href="https://mlkleadhunters.co.uk/">EN</a><a href="#contact" class="btn btn-primary nav-cta">Réserver un appel découverte</a></div>
-    <button class="menu-btn" aria-label="Ouvrir le menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
-  </div>
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mm-inner">
-      <a href="#services" onclick="closeMenu()">Services</a>
-      <a href="#work" onclick="closeMenu()">Études de cas</a>
-      <a href="notre-methode.html" onclick="closeMenu()">Notre méthode</a>
-      <a href="#pricing" onclick="closeMenu()">Tarifs</a>
-      <a href="#contact" onclick="closeMenu()">Contact</a>
-      <a href="#contact" class="btn btn-primary" onclick="closeMenu()" style="justify-content:center;margin-top:8px">Réserver un appel découverte</a>
-    </div>
-  </div>
-</nav>
+<svg width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="mk-reed" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feImage href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%23000'/><stop offset='1' stop-color='%23fff'/></linearGradient><rect width='28' height='28' fill='url(%23g)'/></svg>" x="0" y="0" width="28" height="28" result="tile"/>
+      <feTile in="tile" result="map"/>
+      <feColorMatrix in="map" type="matrix" values="1 0 0 0 0  0 0 0 0 0.5  0 0 0 0 0  0 0 0 0 1" result="map2"/>
+      <feDisplacementMap in="SourceGraphic" in2="map2" scale="40" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
 
-<!-- HERO -->
-<header class="hero">
-  <div class="wrap">
-    <div class="hero-content">
-      <span class="eyebrow">Cold email pour experts-comptables</span>
-      <h1>Conçu pour les cabinets. Prêt à faire grandir votre portefeuille.</h1>
-      <p>Nous décrochons pour vous des rendez-vous qualifiés avec les dirigeants de TPE-PME et les indépendants de votre secteur — clé en main, et dans le strict respect de votre déontologie.</p>
-      <div class="hero-ctas">
-        <a href="#contact" class="btn btn-primary">Réserver un appel découverte <span class="arrow">→</span></a>
-        <a href="#services" class="btn btn-ghost-light">Voir comment ça marche</a>
+<main class="mk-glass mk-glass--hero mk-on-dark" aria-label="Choix de la langue · Choose your language">
+  <div class="mk-glass__scene"></div>
+  <div class="mk-glass__refract"></div>
+  <div class="mk-glass__ribs"></div>
+  <div class="mk-glass__daylight"></div>
+  <div class="mk-glass__grain"></div>
+  <div class="mk-glass__content">
+    <div class="mk-container mk-hero mk-hero--middle">
+      <div class="mk-hero__inner">
+        <h1 class="mk-brand">
+          <span class="mk-sr">mlkleadhunters</span>
+          <span class="mk-wordmark mk-wordmark--lg" aria-hidden="true"><svg class="mk-wordmark__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/></svg><span class="mk-wordmark__mlk">mlk</span><span class="mk-wordmark__name">leadhunters</span></span>
+          <span class="mk-label">Experts-comptables</span>
+        </h1>
+        <div class="mk-hero__actions">
+          <a class="mk-button" href="fr/" hreflang="fr" lang="fr">Français</a>
+          <a class="mk-button mk-button--ghost" href="en/" hreflang="en" lang="en">English</a>
+        </div>
       </div>
     </div>
   </div>
-</header>
+</main>
 
-<!-- RESULTS STRIP -->
-<section class="results">
-  <div class="wrap results-inner">
-    <h3>Des résultats qui parlent d'eux-mêmes</h3>
-    <div class="rstat"><div class="n">25k<sup>+</sup></div><div class="l">Emails délivrés chaque mois</div></div>
-    <div class="rstat"><div class="n">31%</div><div class="l">Taux de réponse moyen</div></div>
-    <div class="rstat"><div class="n">94%</div><div class="l">Placement en boîte de réception</div></div>
-  </div>
-</section>
-
-<!-- INTRO -->
-<section class="intro">
-  <div class="wrap intro-grid">
-    <h2>Nous aidons les cabinets d'expertise comptable à développer leur portefeuille grâce au cold email ciblé, clé en main.</h2>
-    <div class="intro-side">
-      <p>Nous transformons les entreprises et indépendants de votre zone en un flux régulier de conversations qualifiées — et seuls ceux qui cherchent réellement un nouvel expert-comptable arrivent jusqu'à vous.</p>
-      <p>Pas de mailing de masse, aucun risque pour votre réputation. Une prospection sobre et conforme, dans les règles de l'Ordre.</p>
-      <a href="#contact" class="btn btn-dark">Développer mon cabinet</a>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section class="wrap">
-  <div class="about">
-    <div>
-      <span class="eyebrow">À propos</span>
-      <h2>Une prospection qui respecte votre profession</h2>
-      <p>Du ciblage au tri des réponses, nous gérons toute la machine de prospection pour que vous restiez concentré sur vos dossiers. Chaque message est sobre, non comparatif et validé par vous avant le moindre envoi — en parfaite conformité avec votre code de déontologie.</p>
-      <a href="#contact" class="btn btn-primary">Nous contacter</a>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
-      <div class="stat"><div class="n" style="color:#fff">3–4</div><div class="l" style="color:#cdc9ec">Messages par séquence, écrits pour engager la conversation</div></div>
-      <div class="stat"><div class="n" style="color:#fff">48h</div><div class="l" style="color:#cdc9ec">Délai moyen avant la première réponse qualifiée</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- TRUSTED -->
-<section class="trusted">
-  <div class="wrap">
-    <div class="cap">La confiance de cabinets en pleine croissance</div>
-    <div class="logos"><span>Fiduco</span><span>Novexa</span><span>Compta+</span><span>Gestae</span><span>Audivo</span><span>Cabinet Rhône</span></div>
-  </div>
-</section>
-
-<!-- GUARANTEE -->
-<section class="guarantee-sec">
-  <div class="wrap">
-    <span class="eyebrow">Notre engagement</span>
-    <h2>Garantie de lancement : vos premiers rendez-vous qualifiés dès le premier mois — <em>ou le mois suivant est offert.</em> Sans engagement.</h2>
-    <a href="#contact" class="btn btn-primary">Réserver un appel découverte →</a>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section class="section" id="services">
-  <div class="wrap">
-    <div class="head-center">
-      <span class="eyebrow">Ce que nous faisons</span>
-      <h2>Tout ce dont votre prospection a besoin, géré de A à Z</h2>
-    </div>
-    <div class="svc-grid">
-      <div class="svc"><div class="ic">◎</div><h3>Ciblage &amp; listes</h3><p>Nous constituons et vérifions des listes de dirigeants, indépendants et professions libérales les plus susceptibles de chercher un nouvel expert-comptable.</p></div>
-      <div class="svc"><div class="ic">✉</div><h3>Délivrabilité &amp; infrastructure</h3><p>Domaines dédiés, chauffe, SPF/DKIM/DMARC. Votre domaine principal reste intact et vos emails hors des spams.</p></div>
-      <div class="svc"><div class="ic">✎</div><h3>Rédaction conforme</h3><p>Des messages sobres, exacts et non comparatifs, conformes à l'article 152 de votre code de déontologie — jamais du mailing de masse. Vous validez chaque mot.</p></div>
-      <div class="svc"><div class="ic">↗</div><h3>Réponses &amp; reporting</h3><p>Nous répondons, qualifions et ne vous transmettons que les prospects prêts à échanger, avec un rapport mensuel clair.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- CASE STUDIES -->
-<section class="section sand" id="work">
-  <div class="wrap">
-    <div class="head-lead">
-      <div><span class="eyebrow">Études de cas</span><h2>De vrais résultats pour des cabinets comme le vôtre</h2></div>
-      <a href="#contact" class="btn btn-ghost">Parler à un spécialiste</a>
-    </div>
-    <div class="case-grid">
-      <div class="case"><div><div class="tag">Cabinet individuel</div><h3>Des clients récurrents pour un praticien indépendant</h3></div><div class="case-foot"><a href="#contact">Lire l'étude de cas →</a></div></div>
-      <div class="case"><div><div class="tag">Créateurs d'entreprise</div><h3>Atteindre les jeunes entreprises avant les plateformes en ligne</h3></div><div class="case-foot"><a href="#contact">Lire l'étude de cas →</a></div></div>
-      <div class="case"><div><div class="tag">Commerces locaux</div><h3>Remplir le portefeuille d'un cabinet avec les TPE du quartier</h3></div><div class="case-foot"><a href="#contact">Lire l'étude de cas →</a></div></div>
-      <div class="case"><div><div class="tag">Paie</div><h3>Décrocher des missions de gestion de paie pour un cabinet de taille moyenne</h3></div><div class="case-foot"><a href="#contact">Lire l'étude de cas →</a></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- METHODE (aperçu) -->
-<section class="section" id="how">
-  <div class="wrap how">
-    <div class="how-media"></div>
-    <div>
-      <span class="eyebrow">Notre méthode</span>
-      <h2>Une prospection dans les règles de votre Ordre</h2>
-      <div class="check"><span class="t">✓</span><div><b>La prospection est autorisée — depuis 2014</b><span>Le démarchage est permis à la profession depuis le décret de 2014. Nous veillons à ce que ça le reste.</span></div></div>
-      <div class="check"><span class="t">✓</span><div><b>Ciblé, jamais massif</b><span>Des listes courtes et précises — la discrétion qu'exige votre Ordre.</span></div></div>
-      <div class="check"><span class="t">✓</span><div><b>Sobre et non comparatif</b><span>Ni promesses tapageuses, ni comparaison avec d'autres cabinets.</span></div></div>
-      <div class="check"><span class="t">✓</span><div><b>Vous validez chaque message</b><span>Rien ne part sans votre accord.</span></div></div>
-      <div class="check"><span class="t">✓</span><div><b>Seuls les prospects qualifiés vous parviennent</b><span>Nous filtrons le bruit : vous ne rencontrez que des prospects sérieux.</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- BAND -->
-<section class="wrap">
-  <div class="band">
-    <h2>Des portefeuilles mieux remplis, campagne après campagne</h2>
-    <div class="s"><div class="n">17,6k</div><div class="l">Conversations engagées</div></div>
-    <div class="s"><div class="n">31%</div><div class="l">Taux de réponse moyen</div></div>
-    <div class="s"><div class="n">3+ ans</div><div class="l">Durée de vie moyenne d'un client</div></div>
-  </div>
-</section>
-
-<!-- TESTIMONIAL -->
-<section class="section">
-  <div class="wrap quote-wrap">
-    <span class="eyebrow" style="justify-content:center">Ils témoignent</span>
-    <p class="quote" style="margin-top:20px">« Nous avions toujours grandi par le bouche-à-oreille. Nous avons désormais un flux régulier de prospects qualifiés — en parfaite conformité avec nos règles professionnelles. »</p>
-    <div class="quote-by"><span class="av"></span><span class="who"><b>Nom de l'associé</b><small>Cabinet d'expertise comptable</small></span></div>
-  </div>
-</section>
-
-<!-- TEAM -->
-<section class="section sand">
-  <div class="wrap">
-    <div class="head-lead">
-      <div><span class="eyebrow">L'équipe</span><h2>Les personnes qui pilotent votre prospection</h2></div>
-      <a href="#contact" class="btn btn-ghost">Réserver un appel découverte</a>
-    </div>
-    <div class="team-slider">
-      <div class="team-track" id="teamTrack">
-        <div class="member"><div class="ph"></div><h3>Nom du fondateur</h3><small>Fondateur &amp; stratège</small></div>
-        <div class="member"><div class="ph"></div><h3>Membre de l'équipe</h3><small>Rédaction</small></div>
-        <div class="member"><div class="ph"></div><h3>Membre de l'équipe</h3><small>Délivrabilité</small></div>
-        <div class="member"><div class="ph"></div><h3>Membre de l'équipe</h3><small>Data &amp; ciblage</small></div>
-        <div class="member"><div class="ph"></div><h3>Membre de l'équipe</h3><small>Relation client</small></div>
-      </div>
-      <div class="team-arrows">
-        <button class="t-arrow" aria-label="Précédent" onclick="slideTeam(-1)">←</button>
-        <button class="t-arrow" aria-label="Suivant" onclick="slideTeam(1)">→</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="section" id="pricing">
-  <div class="wrap">
-    <div class="head-center">
-      <span class="eyebrow">Tarifs</span>
-      <h2>Des formules pensées pour votre croissance</h2>
-    </div>
-    <div class="price-grid">
-      <div class="plan">
-        <div class="tier">Lancement</div>
-        <div class="price">790 €<small> / mois</small></div>
-        <div class="setup">+ 490 € de mise en place (unique)</div>
-        <ul><li>1 domaine d'envoi dédié</li><li>Jusqu'à 1 000 contacts ciblés / mois</li><li>1 séquence de messages</li><li>Rapport mensuel</li></ul>
-        <a href="#contact" class="btn btn-ghost">Démarrer</a>
-      </div>
-      <div class="plan pop">
-        <span class="pop-tag">Populaire</span>
-        <div class="tier">Croissance</div>
-        <div class="price">1 490 €<small> / mois</small></div>
-        <div class="setup">+ 690 € de mise en place (unique)</div>
-        <ul><li>2–3 domaines d'envoi dédiés</li><li>Jusqu'à 3 000 contacts ciblés / mois</li><li>2 séquences testées en parallèle</li><li>Rapport + point stratégie mensuel</li></ul>
-        <a href="#contact" class="btn btn-primary">Démarrer</a>
-      </div>
-      <div class="plan">
-        <div class="tier">Sur mesure</div>
-        <div class="price">Custom</div>
-        <div class="setup">Adapté à votre volume</div>
-        <ul><li>Infrastructure multi-domaines</li><li>Ciblage haut volume</li><li>Stratège dédié</li><li>Périmètre &amp; reporting sur mesure</li></ul>
-        <a href="#contact" class="btn btn-ghost">Parlons-en</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="section sand" id="contact">
-  <div class="wrap contact-grid contact">
-    <div class="contact-side">
-      <span class="eyebrow">Contact</span>
-      <h2>Lançons la conversation</h2>
-      <p>Parlez-nous de votre cabinet et des clients que vous souhaitez gagner. Nous revenons vers vous sous 48 h pour planifier votre appel découverte gratuit.</p>
-      <div class="cbenefit">Appel de 15 minutes, sans engagement</div>
-      <div class="cbenefit">Un avis honnête sur le potentiel de votre zone</div>
-      <div class="cbenefit">Un plan clair et conforme — que nous travaillions ensemble ou non</div>
-    </div>
-    <div>
-      <div class="field"><label>Votre nom</label><input id="f-name" type="text" placeholder="Jeanne Dupont"></div>
-      <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="vous@cabinet.fr"></div>
-      <div class="field-row">
-        <div class="field"><label>Cabinet</label><input id="f-company" type="text" placeholder="Votre cabinet"></div>
-        <div class="field"><label>Site web</label><input id="f-web" type="text" placeholder="cabinet.fr"></div>
-      </div>
-      <div class="field"><label>Que souhaitez-vous développer ?</label><textarea id="f-msg" placeholder="Parlez-nous de votre cabinet et de vos objectifs"></textarea></div>
-      <button class="btn btn-dark" style="width:100%;justify-content:center" onclick="sendInquiry()">Envoyer ma demande</button>
-      <p class="form-note">Arrive directement sur hello@mlkleadhunter.com</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="foot-cta">
-  <div class="foot-cta-inner">
-    <h2>Prêt à faire grandir votre portefeuille ?</h2>
-    <p>Créons une croissance mesurable pour votre cabinet grâce à un cold email conforme qui décroche de vrais rendez-vous.</p>
-    <a href="#contact" class="btn btn-primary">Réserver un appel découverte →</a>
-  </div>
-  <div class="foot-nav">
-    <div>
-      <div class="brand" style="color:#fff">
-        <svg class="mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#EF571D" stroke-width="2"/><path d="M12 2v6M12 16v6M2 12h6M16 12h6" stroke="#EF571D" stroke-width="2"/><circle cx="12" cy="12" r="2.4" fill="#EF571D"/></svg>
-        <span><b>mlk</b>LeadHunters</span>
-      </div>
-      <p style="color:#a7a2d6;font-size:13.5px;margin-top:14px;max-width:32ch">Cold email clé en main pour cabinets d'expertise comptable. Paris &amp; Île-de-France.</p>
-    </div>
-    <div class="foot-col"><h4>Services</h4><a href="notre-methode.html#ciblage">Ciblage</a><a href="notre-methode.html#delivrabilite">Délivrabilité</a><a href="notre-methode.html#redaction">Rédaction</a><a href="notre-methode.html#reporting">Reporting</a></div>
-    <div class="foot-col"><h4>Entreprise</h4><a href="#work">Études de cas</a><a href="notre-methode.html">Notre méthode</a><a href="#pricing">Tarifs</a><a href="#contact">Contact</a></div>
-    <div class="foot-col"><h4>Contact</h4><a href="mailto:hello@mlkleadhunter.com">hello@mlkleadhunter.com</a><a href="#contact">Réserver un appel</a><a href="mentions-legales.html">Mentions légales</a></div>
-  </div>
-  <div class="foot-bottom">
-    <span>© 2026 mlkLeadHunters. Tous droits réservés.</span>
-    <span>Le cold email conforme pour experts-comptables.</span>
-  </div>
-</footer>
-
-<!-- BARRE MOBILE -->
-<div class="mobile-bar">
-  <a href="#contact" class="btn btn-dark">Nous contacter</a>
-  <a href="tel:+33000000000" class="btn btn-primary">Appeler</a>
-</div>
-
-<script>
-  function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');document.querySelector('.menu-btn').classList.toggle('open')}
-  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');document.querySelector('.menu-btn').classList.remove('open')}
-  function slideTeam(dir){
-    var t=document.getElementById('teamTrack');
-    var card=t.querySelector('.member');
-    var step=card.getBoundingClientRect().width+18;
-    t.scrollBy({left:dir*step,behavior:'smooth'});
-  }
-  function sendInquiry(){
-    var n=document.getElementById('f-name').value||'';
-    var e=document.getElementById('f-email').value||'';
-    var c=document.getElementById('f-company').value||'';
-    var w=document.getElementById('f-web').value||'';
-    var m=document.getElementById('f-msg').value||'';
-    var body='Nom : '+n+'%0D%0AEmail : '+e+'%0D%0ACabinet : '+c+'%0D%0ASite : '+w+'%0D%0A%0D%0A'+m;
-    window.location.href='mailto:hello@mlkleadhunter.com?subject=Demande%20d%27appel%20decouverte%20-%20'+encodeURIComponent(c||n)+'&body='+body;
-  }
-  var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.style.opacity=1;x.target.style.transform='none';x.target.style.transition='.6s ease'}})},{threshold:.12});
-  document.querySelectorAll('.svc,.case,.plan,.member,.check').forEach(function(el){el.style.opacity=0;el.style.transform='translateY(14px)';io.observe(el)});
-</script>
 </body>
 </html>

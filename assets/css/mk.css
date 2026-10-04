@@ -516,3 +516,33 @@ figure.mk-quote p { max-width: 24ch; }
 .mk-mt-5 { margin-top: var(--space-5); }
 .mk-mt-7 { margin-top: var(--space-7); }
 .mk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); }
+
+/* ---------- Method page additions ---------- */
+/* Painted glass (the inner-page hero: no photo, no tint layer). The cold daylight moves below the
+   nav line, a shade keeps the nav and the lead legible where the warm glow is brightest, and the
+   lead takes full ink-on-dark. Applies to every painted hero, so inner pages need no extra markup. */
+.mk-glass:not(.mk-glass--photo):not(.mk-glass--image)::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-dark) 62%, transparent) 0%, transparent 26%),
+    linear-gradient(90deg, color-mix(in srgb, var(--surface-dark) 42%, transparent) 0%, color-mix(in srgb, var(--surface-dark) 30%, transparent) 45%, transparent 75%);
+}
+.mk-glass:not(.mk-glass--photo):not(.mk-glass--image) .mk-glass__daylight { background: radial-gradient(36% 58% at 88% 62%, var(--light-cool) 0%, transparent 70%); }
+.mk-glass:not(.mk-glass--photo):not(.mk-glass--image) .mk-hero__inner .mk-lead { color: var(--ink-on-dark); }
+@media (max-width: 640px) {
+  .mk-glass:not(.mk-glass--photo):not(.mk-glass--image)::before { background: linear-gradient(180deg, color-mix(in srgb, var(--surface-dark) 62%, transparent) 0%, color-mix(in srgb, var(--surface-dark) 34%, transparent) 22%, color-mix(in srgb, var(--surface-dark) 34%, transparent) 100%); }
+  .mk-glass:not(.mk-glass--photo):not(.mk-glass--image) .mk-glass__daylight { opacity: .45; background: radial-gradient(60% 34% at 92% 70%, var(--light-cool) 0%, transparent 70%); }
+}
+/* Keeps a hyphenated word (« rendez-vous ») whole at the end of a title line. */
+.mk-nowrap { white-space: nowrap; }
+
+/* ---------- Site-wide refinements ---------- */
+/* Short cards drop their minimum height once they stack or pair up. */
+@media (max-width: 1100px) { .mk-grid--4 .mk-card { min-height: 0; } }
+@media (max-width: 900px) { .mk-card--short { min-height: 0; } }
+/* Balanced lines in the centred CTA band. */
+.mk-cta__inner h2, .mk-cta__inner .mk-lead { text-wrap: balance; }
+/* The studio-size wordmark scales down on phones (404 and chooser). */
+@media (max-width: 640px) { .mk-wordmark--xl { font-size: 36px; } }
+/* Full-height glass pages with a single message (chooser, 404) centre it vertically. */
+.mk-glass--hero .mk-hero--middle { justify-content: center; }
